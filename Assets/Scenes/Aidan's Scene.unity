@@ -603,10 +603,10 @@ MonoBehaviour:
   target: {fileID: 2008740646}
   pitch: 33
   yaw: 0
-  distance: 12
-  targetOffset: {x: 0, y: 0, z: 0}
+  distance: 10
+  targetOffset: {x: 0, y: 0, z: 4}
   followDamp: 10
-  clampToBounds: 0
+  clampToBounds: 1
   xzMin: {x: -100, y: -100}
   xzMax: {x: 100, y: 100}
 --- !u!1 &1789640941
