@@ -258,7 +258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &451413885
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -537,13 +537,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1620507420}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.183, z: -6.41}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -3.48, y: 2.183, z: -0.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1620507424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,10 +601,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2008740646}
-  pitch: 33
-  yaw: 0
+  pitch: 40.5
+  yaw: 91
   distance: 10
-  targetOffset: {x: 0, y: 0, z: 4}
+  targetOffset: {x: 3.12, y: -0.8, z: 0.18}
   followDamp: 10
   clampToBounds: 1
   xzMin: {x: -100, y: -100}
@@ -709,6 +709,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1969423050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1969423052}
+  - component: {fileID: 1969423051}
+  m_Layer: 0
+  m_Name: RoomManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1969423051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969423050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 871dab3272d8d014e9214114cab2f4c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startChunks:
+  - {fileID: 5061719199388365656, guid: c9fb800443a52f243a401834833bca5a, type: 3}
+  middleChunks:
+  - {fileID: 5061719199388365656, guid: f0f70db1a3887744a825893f4ba7f3b2, type: 3}
+  - {fileID: 5061719199388365656, guid: 5d8a8f62ad3d7974e86339be8e3ad95c, type: 3}
+  - {fileID: 5061719199388365656, guid: a12d3cbedcfc3f542ac2ba118da8b3b3, type: 3}
+  - {fileID: 5061719199388365656, guid: 16f5051d8664ed444b62c544622b7358, type: 3}
+  endChunks:
+  - {fileID: 5061719199388365656, guid: c8a1528d65a97814da9c2274be8e863a, type: 3}
+  beaconPrefab: {fileID: 8831545534744240921, guid: 2029f71f5bdec3f41965fa852529c3b8, type: 3}
+  baseChunkCount: 5
+  chunksPerRoomIncrement: 1
+  currentRoomIndex: 1
+  seed: 12345
+  roomRoot: {fileID: 1969423052}
+  player: {fileID: 2008740646}
+  playerSpawnOffset: {x: 0, y: 5, z: 0}
+--- !u!4 &1969423052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969423050}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.3796196, y: 2.9834342, z: 0.72967774}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2008740640
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +815,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &2008740643
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -786,14 +847,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008740640}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1789640942}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &2008740647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,3 +880,4 @@ SceneRoots:
   - {fileID: 451413888}
   - {fileID: 2008740646}
   - {fileID: 799206097}
+  - {fileID: 1969423052}
