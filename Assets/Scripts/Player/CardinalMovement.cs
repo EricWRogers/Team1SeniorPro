@@ -8,7 +8,7 @@ public class CardinalMovement : MonoBehaviour
     public float maxSlopeAngle = 45f;
 
     [Header("Camera")]
-    public Transform cameraTransform;  //plug in cam
+    public Transform cameraTransform;  
 
     Rigidbody rb;
     Vector3 velocity;
