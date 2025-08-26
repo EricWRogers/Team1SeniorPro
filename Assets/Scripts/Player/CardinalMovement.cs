@@ -4,29 +4,25 @@ public class CardinalMovement : MonoBehaviour
 {
     [Header("Move")]
     public float moveSpeed = 5f;
-    public float acceleration = 20f;   //how long to reach target speed
-    public float maxSlopeAngle = 45f;
 
     [Header("Camera")]
-    public Transform cameraTransform;  
+    public Transform cameraTransform;
 
-    Rigidbody rb;
-    Vector3 velocity;
+    private Rigidbody rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.constraints = RigidbodyConstraints.FreezeRotation; //keep Y pos free
+        rb.constraints = RigidbodyConstraints.FreezeRotation; // lock rotation
     }
 
     void FixedUpdate()
     {
-        // Read input
-        float h = Input.GetAxisRaw("Horizontal"); // A/D or Left/Right
-        float v = Input.GetAxisRaw("Vertical");   // W/S or Up/Down
-        Vector2 input = new Vector2(h, v);
-        input = Vector2.ClampMagnitude(input, 1f);
+        // Input
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        Vector2 input = Vector2.ClampMagnitude(new Vector2(h, v), 1f);
 
         
         Vector3 fwd = Vector3.forward;
@@ -34,25 +30,26 @@ public class CardinalMovement : MonoBehaviour
 
         if (cameraTransform != null)
         {
-            Vector3 camFwd = cameraTransform.forward;
-            camFwd.y = 0f;
-            camFwd.Normalize();
-
-            Vector3 camRight = cameraTransform.right;
-            camRight.y = 0f;
-            camRight.Normalize();
-
-            fwd = camFwd;
-            right = camRight;
+            Vector3 camFwd = cameraTransform.forward; camFwd.y = 0f; camFwd.Normalize();
+            Vector3 camRight = cameraTransform.right; camRight.y = 0f; camRight.Normalize();
+            fwd = camFwd; right = camRight;
         }
 
-        Vector3 desiredVel = (right * input.x + fwd * input.y) * moveSpeed;
+        
+        Vector3 desiredPlanarVel = (right * input.x + fwd * input.y) * moveSpeed;
 
-        //smooth towards the speed you want
-        velocity = Vector3.MoveTowards(rb.linearVelocity, desiredVel, acceleration * Time.fixedDeltaTime);
+    
+        Vector3 vel = rb.linearVelocity;
+        vel.x = desiredPlanarVel.x;
+        vel.z = desiredPlanarVel.z;
 
-        //stay on plane, no vertical drift
-        velocity.y = rb.linearVelocity.y;
-        rb.linearVelocity = velocity;
+        // stop tiny drift when no input
+        if (input.sqrMagnitude < 0.0001f)
+        {
+            vel.x = 0f;
+            vel.z = 0f;
+        }
+
+        rb.linearVelocity = vel;
     }
 }

@@ -867,9 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc80364122ce65c48896f3c2b8294fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 20
-  acceleration: 5
-  maxSlopeAngle: 45
+  moveSpeed: 5
   cameraTransform: {fileID: 1620507423}
 --- !u!1 &2083162406
 GameObject:
