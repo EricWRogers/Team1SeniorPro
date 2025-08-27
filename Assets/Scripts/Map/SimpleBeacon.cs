@@ -4,18 +4,14 @@ public class SimpleBeacon : MonoBehaviour
 {
     public RoomAssembler assembler;
 
-    void Reset()
-    {
-        var col = GetComponent<Collider>();
-        col.isTrigger = true;
-    }
+    void Reset() { GetComponent<Collider>().isTrigger = true; }
 
     void OnTriggerEnter(Collider other)
     {
         if (!assembler) return;
-        if (other.CompareTag("Player") || other.GetComponentInParent<Rigidbody>())
+        if (other.CompareTag("Player") || other.GetComponentInParent<PaintResource>())
         {
-            assembler.NextRoom();
+            assembler.NextRoom(); // should internally GenerateRoom again
         }
     }
 }

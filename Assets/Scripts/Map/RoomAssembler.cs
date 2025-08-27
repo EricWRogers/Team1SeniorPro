@@ -19,6 +19,7 @@ public class RoomAssembler : MonoBehaviour
     public Transform roomRoot;              // where chunks are spawned
     public Transform player;                //reposition player at start
     public Vector3 playerSpawnOffset = new(0, 0.6f, 0);
+    
 
     System.Random rng;
 
@@ -47,7 +48,7 @@ public class RoomAssembler : MonoBehaviour
 
         Transform lastExit = start.exitAnchor;
 
-        // Optional: place player at the start
+
         if (player)
         {
             player.position = start.entryAnchor.position + playerSpawnOffset;
@@ -70,8 +71,11 @@ public class RoomAssembler : MonoBehaviour
             Vector3 pos = end.beaconPoint ? end.beaconPoint.position : end.exitAnchor.position;
             var beacon = Instantiate(beaconPrefab, pos, Quaternion.identity, end.transform);
             var sb = beacon.GetComponent<SimpleBeacon>();
-            if (sb) sb.assembler = this;
+            if (sb) sb.assembler = this; // so it can advance to the next room
         }
+        
+        var pop = GetComponent<RoomPopulator>();
+        if (pop) pop.Populate();
     }
 
     void ClearRoom()
