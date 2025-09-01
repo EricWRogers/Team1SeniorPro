@@ -2,29 +2,62 @@ using UnityEngine;
 
 public class SurfacePainterMulti : MonoBehaviour
 {
+    [Header("Aim & Spray")]
     public Camera cam;
     public Transform nozzle;
-    public Texture2D brushTexture;        // black-circle brush with alpha
-    [Range(0.1f, 50f)] public float brushSizePercent = 4f;
     public float maxSprayDistance = 15f;
-    public LayerMask paintMask = ~0;      // set to Cleanable layer if you make one
+    public LayerMask paintMask = ~0;       
 
+    [Header("Brush (mask painting)")]
+    public Texture2D brushTexture;         
+    [Range(0.05f, 20f)] public float brushSizePercent = 3.5f;
+
+    [Tooltip("Scale brush by renderer size so huge meshes don’t get giant strokes.")]
+    public bool scaleBrushByRendererBounds = true;
+
+    [Header("Paint resource")]
+    public PaintResource paint;            // assign from Player
+    public float paintCostPerSecond = 8f;  // drain while spraying
+
+    [Header("Enemy damage")]
+    public float enemyDps = 15f;
+    public float enemyDamageRadius = 0.9f;
+    public LayerMask enemyMask;
+
+    [Header("Ground safe discs (walkable)")]
+    public GameObject safeDiscPrefab;      
+    public float safeDiscRadius = 0.7f;
+    public float safeDiscLifetime = 8f;
+    public LayerMask groundMask;
+
+    // runtime state
     Renderer activeRenderer;
     RenderTexture activeMask;
     PaintableGroup activeGroup;
+    public bool IsSpraying { get; private set; }
 
     void Reset() { if (!cam) cam = Camera.main; }
 
     void Update()
     {
+        IsSpraying = false;
         if (!Input.GetMouseButton(0)) return;
+        if (!cam || !nozzle) return;
 
-        // Aim from camera to mouse to get a direction
+        // resource cost
+        if (paint && !paint.TrySpend(paintCostPerSecond * Time.deltaTime))
+            return;
+
+        IsSpraying = true;
+
+        // aim
         Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-        if (!Physics.Raycast(mouseRay, out RaycastHit aimHit, 100f, paintMask)) return;
+        if (!Physics.Raycast(mouseRay, out RaycastHit aimHit, 100f, paintMask))
+            return;
+
         Vector3 dir = (aimHit.point - nozzle.position).normalized;
 
-        // Now raycast from the nozzle and prefer MeshCollider hits
+        // spray ray (prefer MeshCollider + Renderer)
         var hits = Physics.RaycastAll(nozzle.position, dir, maxSprayDistance, paintMask);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
@@ -32,40 +65,74 @@ public class SurfacePainterMulti : MonoBehaviour
         {
             var mc = h.collider as MeshCollider;
             var rend = h.collider.GetComponent<Renderer>();
-            if (!mc || !rend) continue; // skip non-mesh hits
+            if (!mc || !rend) continue;
 
+            // assign target
             if (rend != activeRenderer)
             {
                 activeRenderer = rend;
                 activeGroup = rend.GetComponentInParent<PaintableGroup>();
                 activeMask = null;
-                if (activeGroup != null) activeGroup.TryGetMask(rend, out activeMask);
+                if (activeGroup) activeGroup.TryGetMask(rend, out activeMask);
             }
 
-            if (activeMask)
-            {
-                PaintAtUV(activeMask, h.textureCoord);
-            }
-            return; // paint only the nearest valid mesh
+            // paint the mask
+            if (activeMask) PaintAtUV(activeMask, h.textureCoord, rend);
+
+            // enemy damage around impact point
+            DamageEnemiesAt(h.point);
+
+            // if we hit the ground, spawn a walkable disc (gameplay vs visuals)
+            if (safeDiscPrefab && ((1 << h.collider.gameObject.layer) & groundMask) != 0)
+                SpawnSafeDisc(h.point);
+
+            break; // only the nearest valid mesh
         }
     }
 
-    void PaintAtUV(RenderTexture maskRT, Vector2 uv)
+    void PaintAtUV(RenderTexture maskRT, Vector2 uv, Renderer rend)
     {
         if (!brushTexture) return;
         RenderTexture prev = RenderTexture.active;
         RenderTexture.active = maskRT;
+
         GL.PushMatrix();
         GL.LoadPixelMatrix(0, maskRT.width, maskRT.height, 0);
 
         float px = maskRT.width  * uv.x;
         float py = maskRT.height * (1f - uv.y);
+
         float brushPx = Mathf.Max(2f, maskRT.width * (brushSizePercent / 100f));
+        if (scaleBrushByRendererBounds && rend)
+        {
+            // crude downscale for large meshes
+            float largest = Mathf.Max(rend.bounds.size.x, rend.bounds.size.z, rend.bounds.size.y);
+            brushPx *= Mathf.Clamp01(1f / Mathf.Max(largest, 0.001f)); // larger object -> smaller brush
+            brushPx = Mathf.Clamp(brushPx, 1.5f, maskRT.width * 0.1f);
+        }
+
         Rect rect = new Rect(px - brushPx * 0.5f, py - brushPx * 0.5f, brushPx, brushPx);
-
         Graphics.DrawTexture(rect, brushTexture);
-
         GL.PopMatrix();
+
         RenderTexture.active = prev;
+    }
+
+    void DamageEnemiesAt(Vector3 point)
+    {
+        if (enemyDps <= 0f) return;
+        var cols = Physics.OverlapSphere(point, enemyDamageRadius, enemyMask);
+        foreach (var c in cols)
+        {
+            var hp = c.GetComponentInParent<InkBlotHealth>() ?? c.GetComponent<InkBlotHealth>();
+            if (hp) hp.TakeSpray(enemyDps * Time.deltaTime);
+        }
+    }
+
+    void SpawnSafeDisc(Vector3 point)
+    {
+        var disc = Instantiate(safeDiscPrefab, point + Vector3.up * 0.02f, Quaternion.identity);
+        disc.transform.localScale = Vector3.one * (safeDiscRadius * 2f); // diameter
+        if (safeDiscLifetime > 0f) Destroy(disc, safeDiscLifetime);
     }
 }
