@@ -21,7 +21,8 @@ public class SurfacePainterMulti : MonoBehaviour
 
     [Header("Enemy damage")]
     public float enemyDps = 15f;
-    public float enemyDamageRadius = 0.9f;
+    public float enemyConeRange = 3.0f;
+    [Range(1f, 90f)] public float enemyConeAngle = 30f;
     public LayerMask enemyMask;
 
     [Header("Ground safe discs (walkable)")]
@@ -49,6 +50,7 @@ public class SurfacePainterMulti : MonoBehaviour
             return;
 
         IsSpraying = true;
+        DamageEnemiesCone(nozzle.position, nozzle.forward);
 
         // aim
         Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
@@ -79,8 +81,6 @@ public class SurfacePainterMulti : MonoBehaviour
             // paint the mask
             if (activeMask) PaintAtUV(activeMask, h.textureCoord, rend);
 
-            // enemy damage around impact point
-            DamageEnemiesAt(h.point);
 
             // if we hit the ground, spawn a walkable disc (gameplay vs visuals)
             if (safeDiscPrefab && ((1 << h.collider.gameObject.layer) & groundMask) != 0)
@@ -118,12 +118,26 @@ public class SurfacePainterMulti : MonoBehaviour
         RenderTexture.active = prev;
     }
 
-    void DamageEnemiesAt(Vector3 point)
+
+    void DamageEnemiesCone(Vector3 origin, Vector3 fwd)
     {
         if (enemyDps <= 0f) return;
-        var cols = Physics.OverlapSphere(point, enemyDamageRadius, enemyMask);
-        foreach (var c in cols)
+
+        // the front half-cone
+        Vector3 center = origin + fwd.normalized * (enemyConeRange * 0.5f);
+        var hits = Physics.OverlapSphere(center, enemyConeRange, enemyMask, QueryTriggerInteraction.Collide);
+
+        float cosLimit = Mathf.Cos(enemyConeAngle * Mathf.Deg2Rad * 0.5f);
+        foreach (var c in hits)
         {
+            var t = c.transform;
+            Vector3 to = (t.position - origin); to.y = 0f;
+            Vector3 nfwd = fwd; nfwd.y = 0f; nfwd.Normalize();
+
+            if (to.sqrMagnitude < 0.0001f) continue;
+            Vector3 nto = to.normalized;
+            if (Vector3.Dot(nfwd, nto) < cosLimit) continue; // outside cone
+
             var hp = c.GetComponentInParent<InkBlotHealth>() ?? c.GetComponent<InkBlotHealth>();
             if (hp) hp.TakeSpray(enemyDps * Time.deltaTime);
         }
