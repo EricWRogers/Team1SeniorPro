@@ -1,0 +1,669 @@
+fileFormatVersion: 2
+guid: 8c25e383c86e1cb4aa33e00bd02ff731
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: IrisWalkAnim_0
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 6329
+        width: 1622
+        height: 1682
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837c98682eb373a41a155f81b54e5183
+      internalID: -915527956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_1
+      rect:
+        serializedVersion: 2
+        x: 2352
+        y: 6329
+        width: 1621
+        height: 1682
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97da4917ddb0b2c4db5c2dcfdbf15017
+      internalID: -1317812132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_2
+      rect:
+        serializedVersion: 2
+        x: 4405
+        y: 6329
+        width: 1616
+        height: 1664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d46214874c68bc5468f4bf2be91c72a5
+      internalID: 1518415005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_3
+      rect:
+        serializedVersion: 2
+        x: 6453
+        y: 6329
+        width: 1621
+        height: 1664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c1b1972e49686742bf1a76b2f7d93ec
+      internalID: 2001606706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_4
+      rect:
+        serializedVersion: 2
+        x: 8502
+        y: 6329
+        width: 1621
+        height: 1640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed131cf19af36d945a60dc7ae8463afe
+      internalID: 176347072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_5
+      rect:
+        serializedVersion: 2
+        x: 10555
+        y: 6329
+        width: 1616
+        height: 1640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 797ea0e9a62984f47a096994a08943cb
+      internalID: 1850691432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_6
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 4274
+        width: 1622
+        height: 1625
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78fecb7e806061747a5f02a61d1cd53d
+      internalID: -1219786239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_7
+      rect:
+        serializedVersion: 2
+        x: 2352
+        y: 4274
+        width: 1621
+        height: 1625
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53f46f05b56e8894bbb653c4667628b6
+      internalID: -1475901469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_8
+      rect:
+        serializedVersion: 2
+        x: 4405
+        y: 4268
+        width: 1616
+        height: 1628
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1356de552cabd049ac676f913eb0402
+      internalID: 564733850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_9
+      rect:
+        serializedVersion: 2
+        x: 6453
+        y: 4268
+        width: 1622
+        height: 1628
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 232a083b872197c4e9bb76d21dcbe254
+      internalID: 1189077781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_10
+      rect:
+        serializedVersion: 2
+        x: 8502
+        y: 4262
+        width: 1621
+        height: 1634
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 220619950dd5ae44aaa4a8d34e1c804c
+      internalID: 413461708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_11
+      rect:
+        serializedVersion: 2
+        x: 10555
+        y: 4262
+        width: 1616
+        height: 1634
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91d8b78a0c6610f41a5c2ff58b390443
+      internalID: -1301444008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_12
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 2214
+        width: 1621
+        height: 1634
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c6cb2eff27711648b4fbd98979e2c27
+      internalID: 1715257346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_13
+      rect:
+        serializedVersion: 2
+        x: 2352
+        y: 2214
+        width: 1621
+        height: 1634
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31a7bffdbcda646498663cbed3263b45
+      internalID: -1378081540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_14
+      rect:
+        serializedVersion: 2
+        x: 4405
+        y: 2214
+        width: 1616
+        height: 1640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a874a27b734227b4798913e8a270bca5
+      internalID: -1165588668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_15
+      rect:
+        serializedVersion: 2
+        x: 6453
+        y: 2214
+        width: 1621
+        height: 1640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6637e308438ea174ca6dda8a9a2d402b
+      internalID: 992364111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_16
+      rect:
+        serializedVersion: 2
+        x: 8502
+        y: 2214
+        width: 1621
+        height: 1645
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4af6881482108e84d99e669171c10bfe
+      internalID: 1332651274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_17
+      rect:
+        serializedVersion: 2
+        x: 10555
+        y: 2214
+        width: 1616
+        height: 1645
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 017ab4dddea325441a3812a3d9e74c77
+      internalID: -789546939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_18
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 168
+        width: 1621
+        height: 1643
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcc359b49c6795e459aa21b5adcff00f
+      internalID: -1484076111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_19
+      rect:
+        serializedVersion: 2
+        x: 2352
+        y: 171
+        width: 1621
+        height: 1640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b365a1e9370eeb4f973bb50635b3d41
+      internalID: -1029626621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_20
+      rect:
+        serializedVersion: 2
+        x: 4405
+        y: 171
+        width: 1616
+        height: 1646
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8aafb8df07c2684488cfdc2961e761f6
+      internalID: 1316982982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_21
+      rect:
+        serializedVersion: 2
+        x: 6453
+        y: 171
+        width: 1622
+        height: 1646
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1af092f1ccd4964fa5f7f09899c9c04
+      internalID: 929939981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_22
+      rect:
+        serializedVersion: 2
+        x: 8502
+        y: 177
+        width: 1621
+        height: 1646
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1a247f9d2d097d458e641e445aa50ad
+      internalID: -1896375399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IrisWalkAnim_23
+      rect:
+        serializedVersion: 2
+        x: 10555
+        y: 177
+        width: 1616
+        height: 1646
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2f3fa1bf86ed314aa84e9f3fcf475ab
+      internalID: 653729622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 336022a005b787a4a8d8b7181832173f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      IrisWalkAnim_0: -915527956
+      IrisWalkAnim_1: -1317812132
+      IrisWalkAnim_10: 413461708
+      IrisWalkAnim_11: -1301444008
+      IrisWalkAnim_12: 1715257346
+      IrisWalkAnim_13: -1378081540
+      IrisWalkAnim_14: -1165588668
+      IrisWalkAnim_15: 992364111
+      IrisWalkAnim_16: 1332651274
+      IrisWalkAnim_17: -789546939
+      IrisWalkAnim_18: -1484076111
+      IrisWalkAnim_19: -1029626621
+      IrisWalkAnim_2: 1518415005
+      IrisWalkAnim_20: 1316982982
+      IrisWalkAnim_21: 929939981
+      IrisWalkAnim_22: -1896375399
+      IrisWalkAnim_23: 653729622
+      IrisWalkAnim_3: 2001606706
+      IrisWalkAnim_4: 176347072
+      IrisWalkAnim_5: 1850691432
+      IrisWalkAnim_6: -1219786239
+      IrisWalkAnim_7: -1475901469
+      IrisWalkAnim_8: 564733850
+      IrisWalkAnim_9: 1189077781
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

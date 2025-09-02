@@ -363,7 +363,7 @@ Transform:
   m_GameObject: {fileID: 560021667}
   serializedVersion: 2
   m_LocalRotation: {x: 0.09467717, y: -0, z: -0, w: 0.9955081}
-  m_LocalPosition: {x: 0, y: 3.6, z: -18.77}
+  m_LocalPosition: {x: 0, y: 3.6, z: -13.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -803,6 +803,14 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 560021670}
+    - target: {fileID: 7183914097598965171, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: brushSizePercent
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726684648429888857, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

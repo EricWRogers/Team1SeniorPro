@@ -9,10 +9,15 @@ public class CardinalMovement : MonoBehaviour
     public Transform cameraTransform;
 
     private Rigidbody rb;
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponentInChildren<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.constraints = RigidbodyConstraints.FreezeRotation; // lock rotation
     }
@@ -24,7 +29,7 @@ public class CardinalMovement : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         Vector2 input = Vector2.ClampMagnitude(new Vector2(h, v), 1f);
 
-        
+
         Vector3 fwd = Vector3.forward;
         Vector3 right = Vector3.right;
 
@@ -35,10 +40,10 @@ public class CardinalMovement : MonoBehaviour
             fwd = camFwd; right = camRight;
         }
 
-        
+
         Vector3 desiredPlanarVel = (right * input.x + fwd * input.y) * moveSpeed;
 
-    
+
         Vector3 vel = rb.linearVelocity;
         vel.x = desiredPlanarVel.x;
         vel.z = desiredPlanarVel.z;
@@ -51,5 +56,15 @@ public class CardinalMovement : MonoBehaviour
         }
 
         rb.linearVelocity = vel;
+        anim.SetBool("IsWalking", input.sqrMagnitude > 0.0001f);
+
+        if (h > 0.1f)
+        {
+            spriteRenderer.flipX = false; // Facing Right
+        }
+        else if (h < -0.1f)
+        {
+            spriteRenderer.flipX = true; // Facing Left
+        }
     }
 }
