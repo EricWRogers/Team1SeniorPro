@@ -48,7 +48,7 @@ public class PaintResource : MonoBehaviour
     {
         spriteRenderer.color = Color.red;
 
-        yield return new WaitForSeconds(0.5f); // 0.5 seconds
+        yield return new WaitForSeconds(1.0f); // 0.5 seconds
 
         spriteRenderer.color = Color.white;
     }
