@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class PlayerGroundDamage : MonoBehaviour
 {
-    [Header("Damage")]
     public float dpsOnWhite = 10f;
-
-    [Header("Detection")]
-    public LayerMask hazardGroundMask;   // set to Ground
-    public LayerMask safeGroundMask;     // set to SafeGround
-    public float rayUp = 0.5f;
-    public float rayDown = 2.0f;
-    public float safeCheckRadius = 0.45f;
+    public LayerMask hazardGroundMask;  // Ground
+    public float rayUp = 0.5f, rayDown = 2.0f;
 
     PaintResource paint;
 
@@ -20,21 +14,15 @@ public class PlayerGroundDamage : MonoBehaviour
     {
         Vector3 from = transform.position + Vector3.up * rayUp;
 
-        // Are we actually standing over "ground" that should hurt when white?
-        bool onHazardGround = Physics.Raycast(from, Vector3.down, out RaycastHit _, rayDown + rayUp, hazardGroundMask);
+        // Only tick damage if we're actually over ground
+        bool overGround = Physics.Raycast(from, Vector3.down, out var hit, rayDown + rayUp, hazardGroundMask);
+        if (!overGround) return;
 
-        // Are we overlapping any Safe area (start pad or spawned discs)?
-        bool inSafe = Physics.CheckSphere(transform.position + Vector3.up * 0.2f, safeCheckRadius, safeGroundMask, QueryTriggerInteraction.Collide);
+        // Safe if the grid says so
+        var grid = GroundPaintGrid.Instance;
+        bool safe = grid && grid.IsSafe(transform.position);
 
-        if (onHazardGround && !inSafe)
-        {
+        if (!safe)
             paint.Damage(dpsOnWhite * Time.deltaTime);
-        }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position + Vector3.up * 0.2f, safeCheckRadius);
     }
 }

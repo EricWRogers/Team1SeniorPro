@@ -31,6 +31,11 @@ public class SurfacePainterMulti : MonoBehaviour
     public float safeDiscLifetime = 8f;
     public LayerMask groundMask;
 
+    [Header("Ground marking (logic)")]
+    public float groundSafeRadius = 0.7f;
+    public float groundMarkInterval = 0.05f;   // throttle
+    float _nextMarkTime;
+
     // runtime state
     Renderer activeRenderer;
     RenderTexture activeMask;
@@ -82,9 +87,7 @@ public class SurfacePainterMulti : MonoBehaviour
             if (activeMask) PaintAtUV(activeMask, h.textureCoord, rend);
 
 
-            // if we hit the ground, spawn a walkable disc (gameplay vs visuals)
-            if (safeDiscPrefab && ((1 << h.collider.gameObject.layer) & groundMask) != 0)
-                SpawnSafeDisc(h.point);
+            TryMarkGround(h);
 
             break; // only the nearest valid mesh
         }
@@ -116,6 +119,25 @@ public class SurfacePainterMulti : MonoBehaviour
         GL.PopMatrix();
 
         RenderTexture.active = prev;
+    }
+
+    void TryMarkGround(RaycastHit h)
+    {
+        var grid = GroundPaintGrid.Instance;
+        if (!grid) return;
+        if (Time.time < _nextMarkTime) return;
+        _nextMarkTime = Time.time + groundMarkInterval;
+
+        // If we hit ground directly
+        if (((1 << h.collider.gameObject.layer) & grid.groundMask) != 0)
+        {
+            grid.MarkCircle(h.point, groundSafeRadius);
+            return;
+        }
+
+        
+        if (Physics.Raycast(h.point + Vector3.up * 2f, Vector3.down, out var down, 4f, grid.groundMask))
+            grid.MarkCircle(down.point, groundSafeRadius);
     }
 
 

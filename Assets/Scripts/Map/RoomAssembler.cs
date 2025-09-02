@@ -73,9 +73,20 @@ public class RoomAssembler : MonoBehaviour
             var sb = beacon.GetComponent<SimpleBeacon>();
             if (sb) sb.assembler = this; // so it can advance to the next room
         }
-        
+
         var pop = GetComponent<RoomPopulator>();
         if (pop) pop.Populate();
+        
+
+        var grid = GroundPaintGrid.Instance;
+        if (grid)
+        {
+            grid.roomRoot = roomRoot;        
+            grid.RebuildBounds();
+            // Pre-mark a safe area at spawn
+            Vector3 spawnPos = player.position; 
+            grid.MarkCircle(spawnPos, 2.0f, float.PositiveInfinity); // permanent safe start
+        }
     }
 
     void ClearRoom()
