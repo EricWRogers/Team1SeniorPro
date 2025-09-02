@@ -4,6 +4,8 @@ public class InkBlotChasing : MonoBehaviour
 {
     public Transform target;            // assign Player or maybe auto find
     public float speed = 2.0f;
+
+    public float chaseRadius = 10f;
     public float contactDamagePerSec = 12f;
 
     Rigidbody rb;
@@ -24,9 +26,17 @@ public class InkBlotChasing : MonoBehaviour
     void Update()
     {
         if (!target) return;
-        Vector3 to = target.position - transform.position; to.y = 0f;
-        transform.position += to.normalized * speed * Time.deltaTime;
-        // TO Do later: avoid pits / obstacles
+         // Calculate the squared distance to the target
+    Vector3 toTarget = target.position - transform.position;
+    float distanceToTargetSqr = toTarget.sqrMagnitude;
+
+    // Check if the target is within the chase radius
+    if (distanceToTargetSqr <= chaseRadius * chaseRadius)
+    {
+        // Move towards the target
+        toTarget.y = 0f; // Keep movement on the horizontal plane
+        transform.position += toTarget.normalized * speed * Time.deltaTime;
+    }
     }
 
     void OnTriggerStay(Collider other)
