@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Kaden's Scene.unity
     guid: 2b5b35ec0b4384e4882d877de91ebaae
   - enabled: 1
+    path: Assets/Scenes/Aidan's Scene.unity
+    guid: 81b90e7ac5e32cd49b247da6ca2ca482
+  - enabled: 0
     path: Assets/Scenes/Test Scene.unity
     guid: 78355c17044a0cb4a9b7a73d9950c058
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Shop Scene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
