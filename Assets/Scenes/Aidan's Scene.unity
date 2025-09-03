@@ -7343,6 +7343,11 @@ MonoBehaviour:
   endChunks:
   - {fileID: 5061719199388365656, guid: c8a1528d65a97814da9c2274be8e863a, type: 3}
   beaconPrefab: {fileID: 8831545534744240921, guid: 2029f71f5bdec3f41965fa852529c3b8, type: 3}
+  snapBackDelay: 2
+  snapBackFrames: 5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
   baseChunkCount: 5
   chunksPerRoomIncrement: 1
   currentRoomIndex: 1
@@ -7350,6 +7355,9 @@ MonoBehaviour:
   roomRoot: {fileID: 1969423052}
   player: {fileID: 134221547}
   playerSpawnOffset: {x: 0, y: 5, z: 0}
+  safePadPrefab: {fileID: 983232035327656439, guid: 8bee39bf85bf3e84f99b3ddc8ae4ed15, type: 3}
+  safePadRadius: 10
+  safePadFollowSeconds: 0.25
 --- !u!4 &1969423052
 Transform:
   m_ObjectHideFlags: 0

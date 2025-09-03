@@ -7,8 +7,16 @@ public class RoomAssembler : MonoBehaviour
     public List<RoomChunk> startChunks = new();
     public List<RoomChunk> middleChunks = new();
     public List<RoomChunk> endChunks = new();
-    public GameObject beaconPrefab; 
+    public GameObject beaconPrefab;
     bool _isGenerating;
+
+    RoomChunk _startChunk;             // remember the start chunk for the current room
+    int _roomVersion;
+
+    [Header("Snap-back to start (temporary fix)")]
+    public float snapBackDelay = 2f;   // seconds to wait before snapping back
+    public int snapBackFrames = 5;     // extra frames to enforce spawn after the delay
+    public LayerMask groundMask;
 
     [Header("Length & seed")]
     public int baseChunkCount = 5;          // total chunks in room 1
@@ -22,11 +30,11 @@ public class RoomAssembler : MonoBehaviour
     public Vector3 playerSpawnOffset = new(0, 0.6f, 0);
 
     [Header("Safe pad at spawn")]
-    public GameObject safePadPrefab;       
-    public float safePadRadius = 2f;       
-    public float safePadFollowSeconds = 0.25f; 
-    public LayerMask groundMask;   
+    public GameObject safePadPrefab;
+    public float safePadRadius = 2f;
+    public float safePadFollowSeconds = 0.25f;
     
+
 
     System.Random rng;
 
@@ -47,19 +55,16 @@ public class RoomAssembler : MonoBehaviour
         ClearRoom();
         rng = new System.Random(seed);
 
+        // bump version so old snap coroutines cancel automatically
+        _roomVersion++;  // NEW
+
         int total = Mathf.Max(3, baseChunkCount + (currentRoomIndex - 1) * chunksPerRoomIncrement);
 
         // 1) Start
         RoomChunk start = Instantiate(WeightedPick(startChunks), roomRoot);
+        _startChunk = start;                               // NEW
         AlignFirst(start);
-
         Transform lastExit = start.exitAnchor;
-
-
-        if (player)
-        {
-            player.position = start.entryAnchor.position + playerSpawnOffset;
-        }
 
         // 2) Middles
         for (int i = 0; i < total - 2; i++)
@@ -82,46 +87,48 @@ public class RoomAssembler : MonoBehaviour
         var pop = GetComponent<RoomPopulator>();
         if (pop) pop.Populate();
 
-
         var grid = GroundPaintGrid.Instance;
         if (grid)
         {
             grid.roomRoot = roomRoot;
             grid.RebuildBounds();
-            // Pre-mark a safe area at spawn
-            Vector3 spawnPos = player.position;
-            grid.MarkCircle(spawnPos, 2.0f, float.PositiveInfinity); // permanent safe start
+
+            if (player) grid.MarkCircle(player.position, 2.0f, float.PositiveInfinity);
         }
-        
+
         var cam = Camera.main?.GetComponent<IsoCamera>();
-        LayerMask groundMask = default;
-        if (cam) cam.SetClampFromRoot(roomRoot, groundMask, 6f);
+        LayerMask gm = default;
+        if (cam) cam.SetClampFromRoot(roomRoot, gm, 6f);
+
+        
+        StartCoroutine(SnapBackAfterDelay(_roomVersion));  
     }
+
 
     void SpawnSafePadAtPlayer()
-{
-    if (!safePadPrefab || !player) return;
-
-    // Base position = player
-    Vector3 pos = player.position;
-
-    // Snap to ground so the decal sits flush
-    if (groundMask.value != 0 &&
-        Physics.Raycast(pos + Vector3.up * 3f, Vector3.down, out var hit, 10f, groundMask))
     {
-        pos.y = hit.point.y + 0.02f;
-    }
+        if (!safePadPrefab || !player) return;
 
-    var padGO = Instantiate(safePadPrefab, pos, Quaternion.identity, roomRoot); // parented to room
-    var pad = padGO.GetComponent<SafePad>();
-    if (pad)
-    {
-        pad.radius = safePadRadius;
-        pad.followSeconds = safePadFollowSeconds; // 0 = don’t follow
-        pad.followTarget = player;               
-        pad.groundMask = groundMask;
+        // Base position = player
+        Vector3 pos = player.position;
+
+        // Snap to ground so the decal sits flush
+        if (groundMask.value != 0 &&
+            Physics.Raycast(pos + Vector3.up * 3f, Vector3.down, out var hit, 10f, groundMask))
+        {
+            pos.y = hit.point.y + 0.02f;
+        }
+
+        var padGO = Instantiate(safePadPrefab, pos, Quaternion.identity, roomRoot); // parented to room
+        var pad = padGO.GetComponent<SafePad>();
+        if (pad)
+        {
+            pad.radius = safePadRadius;
+            pad.followSeconds = safePadFollowSeconds; // 0 = don’t follow
+            pad.followTarget = player;
+            pad.groundMask = groundMask;
+        }
     }
-}
 
     void ClearRoom()
     {
@@ -184,4 +191,75 @@ public class RoomAssembler : MonoBehaviour
 
         _isGenerating = false;
     }
+    
+    Vector3 ComputeStartPos()
+{
+    if (!_startChunk) return player ? player.position : Vector3.zero;
+
+    Vector3 pos = (_startChunk.entryAnchor ? _startChunk.entryAnchor.position
+                                           : _startChunk.transform.position)
+                  + playerSpawnOffset;
+
+    // snap Y to ground if mask set
+    if (groundMask.value != 0 &&
+        Physics.Raycast(pos + Vector3.up * 3f, Vector3.down, out var hit, 10f, groundMask))
+    {
+        pos.y = hit.point.y + playerSpawnOffset.y;
+    }
+    return pos;
+}
+
+void ForcePlacePlayerAtStart()
+{
+    if (!player) return;
+
+    Vector3 pos = ComputeStartPos();
+
+    // freeze physics
+    var rb = player.GetComponent<Rigidbody>();
+    bool hadRB = rb != null;
+    bool wasKinematic = false;
+
+    if (hadRB)
+    {
+        wasKinematic = rb.isKinematic;
+        rb.isKinematic = true;
+    }
+
+    player.position = pos;
+
+    if (hadRB)
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = wasKinematic;
+    }
+
+    Physics.SyncTransforms();
+}
+
+System.Collections.IEnumerator SnapBackAfterDelay(int versionAtStart)
+{
+    // wait N seconds 
+    float t = 0f;
+    while (t < snapBackDelay)
+    {
+        if (versionAtStart != _roomVersion) yield break; // room changed meanwhile
+        t += Time.unscaledDeltaTime;
+        yield return null;
+    }
+
+    // snap once
+    if (versionAtStart != _roomVersion) yield break;
+    ForcePlacePlayerAtStart();
+
+   
+    for (int i = 0; i < snapBackFrames; i++)
+    {
+        if (versionAtStart != _roomVersion) yield break;
+        yield return new WaitForEndOfFrame();
+        ForcePlacePlayerAtStart();
+    }
+}
+
 }
