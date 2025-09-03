@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Loading Main Menu...");
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Kaden's Scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
     public void Resume()
     {
