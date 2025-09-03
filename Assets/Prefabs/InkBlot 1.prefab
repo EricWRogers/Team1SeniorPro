@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 1
+  chaseRadius: 10
   contactDamagePerSec: 12
 --- !u!114 &2751208211543132297
 MonoBehaviour:
@@ -289,3 +290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 5
+  lootTable:
+  - itemPrefab: {fileID: 4532501592599819455, guid: 47f1a003c9b47864abb047b48468859a, type: 3}
+    dropChance: 50
+  - itemPrefab: {fileID: 2167828022742334288, guid: 840bbbf430c8ded4db7165856d2ed960, type: 3}
+    dropChance: 30

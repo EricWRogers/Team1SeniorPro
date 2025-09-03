@@ -6728,6 +6728,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: InkBlot
       objectReference: {fileID: 0}
+    - target: {fileID: 3983529842993459177, guid: 1dd6ab9341258224490b88583a870995, type: 3}
+      propertyPath: lootTable.Array.data[0].dropChance
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3983529842993459177, guid: 1dd6ab9341258224490b88583a870995, type: 3}
+      propertyPath: lootTable.Array.data[1].dropChance
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4801095046090490322, guid: 1dd6ab9341258224490b88583a870995, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.35

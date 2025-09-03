@@ -1,9 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InkBlotHealth : MonoBehaviour
 {
     public float maxHP = 30f;
     float hp;
+
+    // LootTable
+    [Header("Loot")]
+    public List<InkBlotDrops> lootTable = new List<InkBlotDrops>();
 
     void Awake() { hp = maxHP; }
     public void TakeSpray(float amount)
@@ -14,6 +20,29 @@ public class InkBlotHealth : MonoBehaviour
     void Die()
     {
         // TODO: drop pigment / paint cans here
+        foreach (InkBlotDrops inkBlotDrops in lootTable)
+        {
+            if (Random.Range(0f, 100f) <= inkBlotDrops.dropChance)
+            {
+                InstantiateLoot(inkBlotDrops.itemPrefab);
+            }
+            break;
+        }
         Destroy(gameObject);
+    }
+
+    void InstantiateLoot(GameObject drops)
+    {
+        if (drops)
+        {
+            GameObject droppedInk = Instantiate(drops, transform.position, Quaternion.identity);
+
+            MeshRenderer mesh = droppedInk.GetComponent<MeshRenderer>();
+            if (mesh != null)
+            {
+                // This changes the material's color
+                mesh.material.color = Color.red;
+            }
+        }
     }
 }
