@@ -7,15 +7,18 @@ public class InkBlotHealth : MonoBehaviour
     public float maxHP = 30f;
     float hp;
 
+    private SpriteRenderer spriteRenderer;
+
     // LootTable
     [Header("Loot")]
     public List<InkBlotDrops> lootTable = new List<InkBlotDrops>();
 
-    void Awake() { hp = maxHP; }
+    void Awake() { hp = maxHP; spriteRenderer = GetComponentInChildren<SpriteRenderer>(); }
     public void TakeSpray(float amount)
     {
         hp -= amount;
         if (hp <= 0f) Die();
+        StartCoroutine(FlashRed());
     }
     void Die()
     {
@@ -44,5 +47,14 @@ public class InkBlotHealth : MonoBehaviour
                 mesh.material.color = Color.red;
             }
         }
+    }
+    
+     private IEnumerator FlashRed() //falsh red when taking damage
+    {
+        spriteRenderer.color = Color.red;
+
+        yield return new WaitForSeconds(1.0f); // 0.5 seconds
+
+        spriteRenderer.color = Color.white;
     }
 }

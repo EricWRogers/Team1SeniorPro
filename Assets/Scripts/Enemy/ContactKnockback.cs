@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ContactKnockback : MonoBehaviour
 {
     public float damagePerHit = 10f;
@@ -19,7 +18,7 @@ public class ContactKnockback : MonoBehaviour
         // Damage
         paint.Damage(damagePerHit);
 
-        
+
         Vector3 dir = (other.transform.position - transform.position);
         dir.y = 0f;
         if (dir.sqrMagnitude > 0.0001f)
@@ -30,4 +29,5 @@ public class ContactKnockback : MonoBehaviour
 
         lastHitTime = Time.time;
     }
+    
 }
