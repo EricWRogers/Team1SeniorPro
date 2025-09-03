@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Test Scene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }    
     public void Quit()
     {
