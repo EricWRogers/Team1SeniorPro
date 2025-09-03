@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263b2c4e8282a144db1960f1ea7b06ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 5
+  maxHP: 8
   lootTable:
   - itemPrefab: {fileID: 4532501592599819455, guid: 47f1a003c9b47864abb047b48468859a, type: 3}
     dropChance: 50

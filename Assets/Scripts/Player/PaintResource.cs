@@ -6,50 +6,42 @@ public class PaintResource : MonoBehaviour
     public float maxPaint = 100f;
     public float currentPaint = 100f;
 
-    public event Action<float, float> OnPaintChanged; // current, max
-    public event Action OnPaintDepleted;
+    public event System.Action<float,float> OnPaintChanged;
+    public event System.Action OnPaintDepleted;
 
-    public float PaintPct => Mathf.Approximately(maxPaint, 0f) ? 0f : currentPaint / maxPaint;
+    bool _depletedRaised;
 
-    private SpriteRenderer spriteRenderer;
-
-    void Awake()
-    {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
+    void RaiseChanged() => OnPaintChanged?.Invoke(currentPaint, maxPaint);
 
     public void AddPaint(float amount)
     {
         currentPaint = Mathf.Clamp(currentPaint + amount, 0f, maxPaint);
-        OnPaintChanged?.Invoke(currentPaint, maxPaint);
-        if (currentPaint <= 0f) OnPaintDepleted?.Invoke();
+        if (currentPaint > 0f) _depletedRaised = false;
+        RaiseChanged();
     }
 
     public void Damage(float amount)
     {
         if (amount <= 0f) return;
         currentPaint = Mathf.Clamp(currentPaint - amount, 0f, maxPaint);
-        OnPaintChanged?.Invoke(currentPaint, maxPaint);
-        if (currentPaint <= 0f) OnPaintDepleted?.Invoke();
-
-        StartCoroutine(FlashRed());    
+        RaiseChanged();
+        if (currentPaint <= 0f && !_depletedRaised)
+        {
+            _depletedRaised = true;
+            OnPaintDepleted?.Invoke();
+        }
     }
 
-    public bool TrySpend(float amount) // for the paint spraying later, call this
+    public bool TrySpend(float amount)
     {
-        if (currentPaint < amount) return false;
+        if (currentPaint < amount) { Damage(currentPaint); return false; } // drop to zero -> trigger
         currentPaint -= amount;
-        OnPaintChanged?.Invoke(currentPaint, maxPaint);
-        if (currentPaint <= 0f) OnPaintDepleted?.Invoke();
+        RaiseChanged();
+        if (currentPaint <= 0f && !_depletedRaised)
+        {
+            _depletedRaised = true;
+            OnPaintDepleted?.Invoke();
+        }
         return true;
-    }
-    
-    private IEnumerator FlashRed() //falsh red when taking damage
-    {
-        spriteRenderer.color = Color.red;
-
-        yield return new WaitForSeconds(1.0f); // 0.5 seconds
-
-        spriteRenderer.color = Color.white;
     }
 }

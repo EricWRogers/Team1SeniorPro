@@ -36,6 +36,10 @@ public class SurfacePainterMulti : MonoBehaviour
     public float groundMarkInterval = 0.05f;   // throttle
     float _nextMarkTime;
 
+    [Header("Aim")]
+    public bool rotateNozzle = true;
+    public float nozzleTurnSpeed = 20f;
+
     // runtime state
     Renderer activeRenderer;
     RenderTexture activeMask;
@@ -64,9 +68,21 @@ public class SurfacePainterMulti : MonoBehaviour
 
         Vector3 dir = (aimHit.point - nozzle.position).normalized;
 
-        // spray ray (prefer MeshCollider + Renderer)
+        if (rotateNozzle && nozzle)   //make paint spray in mouse direction
+        {
+            Vector3 look = (aimHit.point - nozzle.position);
+            look.y = 0f; // keep level; remove if you want full 3D aim
+            if (look.sqrMagnitude > 0.0001f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(look.normalized);
+                nozzle.rotation = Quaternion.Slerp(nozzle.rotation, targetRot, Time.deltaTime * nozzleTurnSpeed);
+            }
+        }
+
+        // spray ray
         var hits = Physics.RaycastAll(nozzle.position, dir, maxSprayDistance, paintMask);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
 
         foreach (var h in hits)
         {
