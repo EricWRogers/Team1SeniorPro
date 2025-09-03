@@ -12,7 +12,7 @@ public class LoseScreen : MonoBehaviour
     
     public static bool GameIsPaused = false;
 
-    public void gameOver()
+    public void GameOver()
     {
         gameOverUI.SetActive(true);
         Time.timeScale = 0f;

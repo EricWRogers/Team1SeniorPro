@@ -7516,6 +7516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Iris(temp) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6131217306032986920, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: loseScreen
+      value: 
+      objectReference: {fileID: 722711276}
     - target: {fileID: 7183914097598965171, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: cam
       value: 

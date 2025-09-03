@@ -11,6 +11,8 @@ public class PaintResource : MonoBehaviour
     public event Action<float> OnDamaged;  // amount
     public event Action<float> OnHealed;   // amount
 
+    public LoseScreen loseScreen;
+
     bool _depletedRaised;
 
     void RaiseChanged() => OnPaintChanged?.Invoke(currentPaint, maxPaint);
@@ -34,6 +36,7 @@ public class PaintResource : MonoBehaviour
         {
             _depletedRaised = true;
             OnPaintDepleted?.Invoke();
+            loseScreen.GameOver();
         }
     }
 
