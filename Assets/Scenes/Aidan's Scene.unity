@@ -6642,6 +6642,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1862630409881857659, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862630409881857659, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1620507423}
@@ -6683,11 +6687,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: groundSafeRadius
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: groundMask.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: paintCostPerSecond
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4964255680993957033, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: m_Name
