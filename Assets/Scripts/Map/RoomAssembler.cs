@@ -8,6 +8,7 @@ public class RoomAssembler : MonoBehaviour
     public List<RoomChunk> middleChunks = new();
     public List<RoomChunk> endChunks = new();
     public GameObject beaconPrefab; 
+    bool _isGenerating;
 
     [Header("Length & seed")]
     public int baseChunkCount = 5;          // total chunks in room 1
@@ -19,6 +20,12 @@ public class RoomAssembler : MonoBehaviour
     public Transform roomRoot;              // where chunks are spawned
     public Transform player;                //reposition player at start
     public Vector3 playerSpawnOffset = new(0, 0.6f, 0);
+
+    [Header("Safe pad at spawn")]
+    public GameObject safePadPrefab;       
+    public float safePadRadius = 2f;       
+    public float safePadFollowSeconds = 0.25f; 
+    public LayerMask groundMask;   
     
 
     System.Random rng;
@@ -69,9 +76,7 @@ public class RoomAssembler : MonoBehaviour
         if (beaconPrefab)
         {
             Vector3 pos = end.beaconPoint ? end.beaconPoint.position : end.exitAnchor.position;
-            var beacon = Instantiate(beaconPrefab, pos, Quaternion.identity, end.transform);
-            var sb = beacon.GetComponent<SimpleBeacon>();
-            if (sb) sb.assembler = this; // so it can advance to the next room
+            Instantiate(beaconPrefab, pos, Quaternion.identity, end.transform);
         }
 
         var pop = GetComponent<RoomPopulator>();
@@ -92,6 +97,31 @@ public class RoomAssembler : MonoBehaviour
         LayerMask groundMask = default;
         if (cam) cam.SetClampFromRoot(roomRoot, groundMask, 6f);
     }
+
+    void SpawnSafePadAtPlayer()
+{
+    if (!safePadPrefab || !player) return;
+
+    // Base position = player
+    Vector3 pos = player.position;
+
+    // Snap to ground so the decal sits flush
+    if (groundMask.value != 0 &&
+        Physics.Raycast(pos + Vector3.up * 3f, Vector3.down, out var hit, 10f, groundMask))
+    {
+        pos.y = hit.point.y + 0.02f;
+    }
+
+    var padGO = Instantiate(safePadPrefab, pos, Quaternion.identity, roomRoot); // parented to room
+    var pad = padGO.GetComponent<SafePad>();
+    if (pad)
+    {
+        pad.radius = safePadRadius;
+        pad.followSeconds = safePadFollowSeconds; // 0 = don’t follow
+        pad.followTarget = player;               
+        pad.groundMask = groundMask;
+    }
+}
 
     void ClearRoom()
     {
@@ -134,10 +164,24 @@ public class RoomAssembler : MonoBehaviour
         chunk.transform.position += delta;
     }
 
-        public void NextRoom()
+    public void NextRoom()
     {
+        if (_isGenerating) return;
+        StartCoroutine(NextRoomCo());
+    }
+
+    System.Collections.IEnumerator NextRoomCo()
+    {
+        _isGenerating = true;
+
         currentRoomIndex++;
-        seed += 9973; // change layout a bit each room
+        seed += 9973;
+
+        // Let current frame finishs
+        yield return null;
+
         GenerateRoom();
+
+        _isGenerating = false;
     }
 }
