@@ -6047,11 +6047,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 134221547}
+  targetTag: Player
+  detachFromParentOnEnable: 1
+  rebindInterval: 0.5
   pitch: 40.7
   yaw: 91
   distance: 10
   targetOffset: {x: 4.5, y: -1.35, z: 0.18}
   followDamp: 10
+  snapIfFartherThan: 25
   clampToBounds: 1
   xzMin: {x: -100, y: -100}
   xzMax: {x: 100, y: 100}

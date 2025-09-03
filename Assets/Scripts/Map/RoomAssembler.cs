@@ -76,17 +76,21 @@ public class RoomAssembler : MonoBehaviour
 
         var pop = GetComponent<RoomPopulator>();
         if (pop) pop.Populate();
-        
+
 
         var grid = GroundPaintGrid.Instance;
         if (grid)
         {
-            grid.roomRoot = roomRoot;        
+            grid.roomRoot = roomRoot;
             grid.RebuildBounds();
             // Pre-mark a safe area at spawn
-            Vector3 spawnPos = player.position; 
+            Vector3 spawnPos = player.position;
             grid.MarkCircle(spawnPos, 2.0f, float.PositiveInfinity); // permanent safe start
         }
+        
+        var cam = Camera.main?.GetComponent<IsoCamera>();
+        LayerMask groundMask = default;
+        if (cam) cam.SetClampFromRoot(roomRoot, groundMask, 6f);
     }
 
     void ClearRoom()
