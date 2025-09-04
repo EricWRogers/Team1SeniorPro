@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SurfacePainter : MonoBehaviour
 {
+    public static SurfacePainter instance;
     [Header("Refs")]
     public Camera cam;                // assign Main Camera
     public Transform nozzle;          // the spray origin (a child at head/hand height)
@@ -15,6 +16,13 @@ public class SurfacePainter : MonoBehaviour
     GameObject lastHitObj;
     RenderTexture maskRT;
     Material targetMat;
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
 
     void Reset()
     {
@@ -48,7 +56,7 @@ public class SurfacePainter : MonoBehaviour
         }
     }
 
-    void SetupTarget(GameObject obj)
+    public void SetupTarget(GameObject obj)
     {
         var mr = obj.GetComponent<MeshRenderer>();
         if (!mr) { maskRT = null; targetMat = null; return; }
@@ -83,7 +91,7 @@ public class SurfacePainter : MonoBehaviour
         targetMat.SetTexture("_Mask_Texture", maskRT);
     }
 
-    void PaintAtUV(Vector2 uv)
+   public  void PaintAtUV( Vector2 uv)
     {
         if (!brushTexture) { Debug.LogWarning("Assign a brushTexture (black circle with soft alpha)."); return; }
 
