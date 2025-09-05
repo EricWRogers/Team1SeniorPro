@@ -77,3 +77,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b001d1514fb5fa4cad81fb79b988a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxEnemyCount: 6
+  currentEnemyCount: 0

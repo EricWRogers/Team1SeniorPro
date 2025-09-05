@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2618776859017305356}
   - component: {fileID: 5247565350732156267}
   - component: {fileID: 2366970550926792454}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: IrisSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 3203860121021604385}
   - component: {fileID: 6648631342501461006}
   - component: {fileID: 8868904192415711606}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpriteOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 6402451751008199748}
   - component: {fileID: 5785114391896016017}
   - component: {fileID: 8159271136816471673}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Iris(temp)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -341,6 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxPaint: 100
   currentPaint: 100
+  loseScreen: {fileID: 0}
 --- !u!114 &6402451751008199748
 MonoBehaviour:
   m_ObjectHideFlags: 0
