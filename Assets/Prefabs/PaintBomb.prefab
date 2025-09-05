@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintRadius: 5
-  paintSpotsCount: 2
+  paintSpotsCount: 4
   splashEffect: {fileID: 0}
   surfacePainter: {fileID: 0}
 --- !u!54 &7206957763906330808

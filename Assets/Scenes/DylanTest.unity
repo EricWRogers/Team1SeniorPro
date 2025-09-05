@@ -7550,6 +7550,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4964255680993957033, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 532488041}
+    - targetCorrespondingSourceObject: {fileID: 4964255680993957033, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2004701544}
     - targetCorrespondingSourceObject: {fileID: 8506765343372626509, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2055614839}
@@ -7565,6 +7568,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c911b302713d04e9ae7478ce43d100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2004701544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532488033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d6e0b2c37207ed1b29f66c85da07eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1620507422}
+  paintBombPrefab: {fileID: 1576176229757580659, guid: 6ae52709b71c3b7a1b13d99f6ddd4fe2, type: 3}
+  throwOrigin: {fileID: 536724001}
+  arcHeight: 3
+  throwSpeed: 10
+  cooldownTime: 1
 --- !u!1 &2046482873
 GameObject:
   m_ObjectHideFlags: 0
