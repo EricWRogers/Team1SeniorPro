@@ -19,24 +19,21 @@ public class Enemy : MonoBehaviour
     private bool m_inRange = false;
     private bool reachedEndOfPath;
     private int currentWaypoint;
-    private GameObject m_player;
+    protected GameObject m_player;
     private Rigidbody m_rb;
     private Seeker m_seeker;
     private Path m_path;
-    private float tempSpeed;
-
 
     void Start()
     {
-        tempSpeed = speed;
         m_player = GameObject.FindGameObjectWithTag("Player");
         m_rb = GetComponent<Rigidbody>();
         m_seeker = GetComponent<Seeker>();
         InvokeRepeating("UpdatePath", 0f, .5f);
     }
-
-    void FixedUpdate()
+    void Update()
     {
+        transform.LookAt(Camera.main.transform);
         if (m_path == null)
         {
             return;
@@ -55,7 +52,6 @@ public class Enemy : MonoBehaviour
         {
             m_playerDetected = true;
         }
-        else m_playerDetected = false;
         if (Vector3.Distance(transform.position, m_player.transform.position) < attackRange)
         {
             m_inRange = true;
@@ -69,17 +65,13 @@ public class Enemy : MonoBehaviour
             Move();
             if (m_inRange)
             {
-
                 m_rb.isKinematic = true;
+                Attack.Invoke();
             }
             else
             {
                 m_rb.isKinematic = false;
             }
-
-        }
-        else
-        {
 
         }
     }
@@ -103,7 +95,7 @@ public class Enemy : MonoBehaviour
     public void Move()
     {
         Vector3 dir = (Vector3)m_path.vectorPath[currentWaypoint] - m_rb.position;
-        Vector3 force = dir * speed * Time.fixedDeltaTime;
+        Vector3 force = dir * speed * Time.deltaTime;
         m_rb.AddForce(force);
         float distance = Vector3.Distance(m_rb.position, m_path.vectorPath[currentWaypoint]);
         if (distance < nextWayPointDes)
@@ -115,7 +107,7 @@ public class Enemy : MonoBehaviour
     private void OnDrawGizmos()
     {
         Vector3 dir = (transform.position - m_player.transform.position).normalized;
-        Gizmos.DrawRay(transform.position, dir * -attackRange);
+        Gizmos.DrawRay(transform.position, dir * -detectionRange);
     }
 
 }
