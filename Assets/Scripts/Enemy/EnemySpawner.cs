@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyPrefabs;
-    public float spawnInterval;
+    public Vector2 spawnIntervalRange = new Vector2 (5, 15);
     public float m_currentInterval;
     private EnemyManager m_enemyManager;
 
@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
             if (m_enemyManager.currentEnemyCount < m_enemyManager.maxEnemyCount)
             {
                 SpawnEnemy();
-                m_currentInterval = spawnInterval;
+                m_currentInterval = Random.Range(spawnIntervalRange.x, spawnIntervalRange.y);
             }
             
         }
