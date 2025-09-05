@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Pathfinding;
+using UnityEditor;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Enemy : MonoBehaviour
     public UnityEvent Attack;
     public float nextWayPointDes;
     public LayerMask layerMask;
+    public float flashTime;
 
     private bool m_playerDetected = false;
     private bool m_inRange = false;
@@ -23,15 +25,26 @@ public class Enemy : MonoBehaviour
     private Rigidbody m_rb;
     private Seeker m_seeker;
     private Path m_path;
+    private bool m_canSeePlayer;
+    private RaycastHit hit;
+    protected Health m_health;
+    private Color color;
 
-    void Start()
+    public void Awake()
+    {
+        m_health = GetComponent<Health>();
+        m_health.maxHealth = health;
+    }
+
+    public void Start()
     {
         m_player = GameObject.FindGameObjectWithTag("Player");
         m_rb = GetComponent<Rigidbody>();
         m_seeker = GetComponent<Seeker>();
         InvokeRepeating("UpdatePath", 0f, .5f);
+        color = GetComponent<SpriteRenderer>().color;
     }
-    void Update()
+    public void Update()
     {
         transform.LookAt(Camera.main.transform);
         if (m_path == null)
@@ -47,12 +60,22 @@ public class Enemy : MonoBehaviour
         {
             reachedEndOfPath = false;
         }
+        Vector3 dir = (m_player.transform.position - transform.position).normalized;
+        if (Physics.Raycast(transform.position, dir, out hit, attackRange))
+        {
+            Debug.Log(hit.transform.gameObject.name);
+            if (hit.transform.tag == "Player")
+            {
+                m_canSeePlayer = true;
+            }
+            else m_canSeePlayer = false;
+        }
 
         if (Vector3.Distance(transform.position, m_player.transform.position) < detectionRange)
         {
             m_playerDetected = true;
         }
-        if (Vector3.Distance(transform.position, m_player.transform.position) < attackRange)
+        if (Vector3.Distance(transform.position, m_player.transform.position) < attackRange && m_canSeePlayer)
         {
             m_inRange = true;
         }
@@ -104,10 +127,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    public void FlashRed()
     {
-        Vector3 dir = (transform.position - m_player.transform.position).normalized;
-        Gizmos.DrawRay(transform.position, dir * -detectionRange);
+        Color color = GetComponent<SpriteRenderer>().color;
+        GetComponent<SpriteRenderer>().color = Color.red;
+        Invoke("ResetColor", flashTime);
     }
-
+    public void ResetColor()
+    {
+        GetComponent<SpriteRenderer>().color = color;
+    }
 }
