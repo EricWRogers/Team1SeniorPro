@@ -28,7 +28,6 @@ public class Enemy : MonoBehaviour
     private bool m_canSeePlayer;
     private RaycastHit hit;
     protected Health m_health;
-    private Color color;
 
     public void Awake()
     {
@@ -42,7 +41,6 @@ public class Enemy : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
         m_seeker = GetComponent<Seeker>();
         InvokeRepeating("UpdatePath", 0f, .5f);
-        color = GetComponent<SpriteRenderer>().color;
     }
     public void Update()
     {
@@ -63,7 +61,6 @@ public class Enemy : MonoBehaviour
         Vector3 dir = (m_player.transform.position - transform.position).normalized;
         if (Physics.Raycast(transform.position, dir, out hit, attackRange))
         {
-            Debug.Log(hit.transform.gameObject.name);
             if (hit.transform.tag == "Player")
             {
                 m_canSeePlayer = true;
@@ -125,16 +122,5 @@ public class Enemy : MonoBehaviour
         {
             currentWaypoint++;
         }
-    }
-
-    public void FlashRed()
-    {
-        Color color = GetComponent<SpriteRenderer>().color;
-        GetComponent<SpriteRenderer>().color = Color.red;
-        Invoke("ResetColor", flashTime);
-    }
-    public void ResetColor()
-    {
-        GetComponent<SpriteRenderer>().color = color;
     }
 }
