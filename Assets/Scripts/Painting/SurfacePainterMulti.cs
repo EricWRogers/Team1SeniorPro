@@ -176,8 +176,8 @@ public class SurfacePainterMulti : MonoBehaviour
             Vector3 nto = to.normalized;
             if (Vector3.Dot(nfwd, nto) < cosLimit) continue; // outside cone
 
-            var hp = c.GetComponentInParent<InkBlotHealth>() ?? c.GetComponent<InkBlotHealth>();
-            if (hp) hp.TakeSpray(enemyDps * Time.deltaTime);
+            var hp = c.GetComponentInParent<Health>() ?? c.GetComponent<Health>();
+            if (hp) hp.Damage(enemyDps * Time.deltaTime);
         }
     }
 
