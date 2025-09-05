@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Cleanable
+  - GameManager
+  - Enemy
   layers:
   - Default
   - TransparentFX

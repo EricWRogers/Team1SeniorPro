@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5032191729609155891}
   - component: {fileID: 1300582559487780994}
   - component: {fileID: 1843266408847379892}
+  - component: {fileID: 5738778609908758863}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,3 +65,15 @@ MonoBehaviour:
   gameRestart: {fileID: 0}
   surfacePainter: {fileID: 0}
   surfacePainterM: {fileID: 0}
+--- !u!114 &5738778609908758863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6572310589110225400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b001d1514fb5fa4cad81fb79b988a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
