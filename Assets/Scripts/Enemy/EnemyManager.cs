@@ -9,5 +9,6 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         currentEnemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        
     }
 }

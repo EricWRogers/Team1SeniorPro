@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Pathfinding;
-using UnityEditor;
+using System.Collections.Generic;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,9 +15,10 @@ public class Enemy : MonoBehaviour
     public float detectionRange;
     public UnityEvent Attack;
     public float nextWayPointDes;
-    public LayerMask layerMask;
-    public float flashTime;
+    //public float flashTime;
+    public List<Transform> wayPoints;
 
+    private int m_curWayPoint = 0;
     private bool m_playerDetected = false;
     private bool m_inRange = false;
     private bool reachedEndOfPath;
@@ -28,11 +30,16 @@ public class Enemy : MonoBehaviour
     private bool m_canSeePlayer;
     private RaycastHit hit;
     protected Health m_health;
+    private SpriteRenderer spriteRenderer;
+
+    [Header("Loot")]
+    public List<InkBlotDrops> lootTable = new List<InkBlotDrops>();
 
     public void Awake()
     {
         m_health = GetComponent<Health>();
         m_health.maxHealth = health;
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     public void Start()
@@ -94,6 +101,21 @@ public class Enemy : MonoBehaviour
             }
 
         }
+        else if (wayPoints.Count != 0)
+        {
+            target = wayPoints[m_curWayPoint].position;
+            Move();
+            float distance = Vector3.Distance(m_rb.position, wayPoints[m_curWayPoint].position);
+            if (distance < nextWayPointDes)
+            {
+                if (m_curWayPoint == wayPoints.Count - 1)
+                {
+                    m_curWayPoint = 0;
+                }
+                else
+                    m_curWayPoint++;
+            }
+        }
     }
 
     void UpdatePath()
@@ -122,5 +144,41 @@ public class Enemy : MonoBehaviour
         {
             currentWaypoint++;
         }
+    }
+
+    public void SpawnLoot()
+    {
+        foreach (InkBlotDrops inkBlotDrops in lootTable)
+        {
+            if (Random.Range(0f, 100f) <= inkBlotDrops.dropChance)
+            {
+                InstantiateLoot(inkBlotDrops.itemPrefab);
+            }
+            break;
+        }
+    }
+
+    void InstantiateLoot(GameObject drops)
+    {
+        if (drops)
+        {
+            GameObject droppedInk = Instantiate(drops, transform.position, Quaternion.identity);
+
+            MeshRenderer mesh = droppedInk.GetComponent<MeshRenderer>();
+            if (mesh != null)
+            {
+                // This changes the material's color
+                mesh.material.color = Color.red;
+            }
+        }
+    }
+
+    private IEnumerator FlashRed() //falsh red when taking damage
+    {
+        spriteRenderer.color = Color.red;
+
+        yield return new WaitForSeconds(1.0f); // 0.5 seconds
+
+        spriteRenderer.color = Color.white;
     }
 }

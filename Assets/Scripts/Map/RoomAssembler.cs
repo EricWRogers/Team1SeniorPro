@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Pathfinding;
 
 public class RoomAssembler : MonoBehaviour
 {
@@ -33,8 +34,10 @@ public class RoomAssembler : MonoBehaviour
     public GameObject safePadPrefab;
     public float safePadRadius = 2f;
     public float safePadFollowSeconds = 0.25f;
-    
 
+    private float m_wait = .5f;
+    private bool m_scanned = false;
+    private float m_curWait;
 
     System.Random rng;
 
@@ -46,11 +49,29 @@ public class RoomAssembler : MonoBehaviour
     void Start()
     {
         GenerateRoom();
+        Debug.Log("2");
+        m_curWait = m_wait;
+    }
+    void Update()
+    {
+        if (m_curWait > 0)
+        {
+            m_curWait -= Time.deltaTime;
+
+        }
+        else if (!m_scanned)
+        {
+            AstarPath.active.Scan();
+            Debug.Log("4");
+            m_scanned = true;
+        }
     }
 
     [ContextMenu("Generate Room")]
     public void GenerateRoom()
     {
+        m_curWait = m_wait;
+        m_scanned = false;
         if (!roomRoot) roomRoot = this.transform;
         ClearRoom();
         rng = new System.Random(seed);
@@ -100,8 +121,10 @@ public class RoomAssembler : MonoBehaviour
         LayerMask gm = default;
         if (cam) cam.SetClampFromRoot(roomRoot, gm, 6f);
 
+
+        StartCoroutine(SnapBackAfterDelay(_roomVersion));
+        Debug.Log("1");
         
-        StartCoroutine(SnapBackAfterDelay(_roomVersion));  
     }
 
 

@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     public float currentHealth = 100f;
     public UnityEvent OnDamaged;
     public UnityEvent OnHeal;
+    public UnityEvent OnDeath;
 
     
     void Start()
@@ -27,6 +28,7 @@ public class Health : MonoBehaviour
         OnDamaged.Invoke();
         if (currentHealth <= 0f)
         {
+            OnDeath.Invoke();
             Destroy(gameObject);
         }
     }

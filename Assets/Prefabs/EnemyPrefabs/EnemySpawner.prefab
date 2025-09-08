@@ -48,5 +48,5 @@ MonoBehaviour:
   - {fileID: 4677944797815120736, guid: 77cc8a4e221f82847be3c294233ca073, type: 3}
   - {fileID: 421879907604921582, guid: d1a15d86bbb176c4eaf06803702ff9fa, type: 3}
   - {fileID: 8271169975045691570, guid: 2bf045a51ceb9184e8572173fb0d8ab6, type: 3}
-  spawnInterval: 15
+  spawnIntervalRange: {x: 10, y: 30}
   m_currentInterval: 0
