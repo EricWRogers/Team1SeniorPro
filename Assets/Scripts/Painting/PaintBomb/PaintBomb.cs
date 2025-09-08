@@ -53,69 +53,75 @@ private void OnCollisionEnter(Collision collision)
 
     void CreatePaintPattern(GameObject obj, Vector3 hitPoint, Vector3 normal)
     {
-    int ringsCount = 3;
-    float maxRadius = paintRadius;
-    
-    for (int ring = 0; ring < ringsCount; ring++)
-    {
-        float ringRadius = maxRadius * ((float)(ring + 1) / ringsCount);
-        int spotsInRing = paintSpotsCount - (ring * 4); // Fewer spots in outer rings
-        
-        for (int i = 0; i < spotsInRing; i++)
-        {
-            // Add randomness to angle and radius
-            float baseAngle = i * (360f / spotsInRing);
-            float randomAngleOffset = Random.Range(-15f, 15f);
-            float angle = baseAngle + randomAngleOffset;
-            
-            // More variation in radius for outer rings
-            float radiusVariation = ringRadius * 0.3f * (ring + 1);
-            float randomRadius = ringRadius + Random.Range(-radiusVariation, radiusVariation);
-            
-            // Create points in a circle on the hit plane
-            Vector3 right = Vector3.Cross(normal, Vector3.up).normalized;
-            Vector3 forward = Vector3.Cross(right, normal);
-            
-            // Add some random offset to create more chaos
-            float chaos = Random.Range(0f, 0.5f) * ring; // More chaos in outer rings
-            Vector3 randomOffset = (Random.onUnitSphere * chaos);
-            randomOffset = Vector3.ProjectOnPlane(randomOffset, normal); // Keep offset on surface
-            
-            Vector3 circlePoint = hitPoint + 
-                (right * Mathf.Cos(angle * Mathf.Deg2Rad) + 
-                 forward * Mathf.Sin(angle * Mathf.Deg2Rad)) * randomRadius +
-                randomOffset;
+        // Get all renderers in the hierarchy
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return;
 
-            // Adjust ray length based on distance from center
-            float rayLength = 1f + (ring * 0.5f); // Longer rays for outer rings
-            var ray = Physics.RaycastAll(circlePoint + normal, -normal, rayLength);
-    
-            foreach (var hit in ray)
+        // Calculate base vectors
+        Vector3 right = Vector3.Cross(normal, Vector3.up).normalized;
+        Vector3 forward = Vector3.Cross(right, normal);
+
+        int ringsCount = 3;
+        float maxRadius = paintRadius;
+
+        for (int ring = 0; ring < ringsCount; ring++)
+        {
+            float ringRadius = maxRadius * ((float)(ring + 1) / ringsCount);
+            int spotsInRing = paintSpotsCount - (ring * 4);
+
+            for (int i = 0; i < spotsInRing; i++)
             {
-                Vector2 paintUV = hit.textureCoord;
-                SurfacePainterMulti.instance.ActiveTarget(hit);
+                float baseAngle = i * (360f / spotsInRing);
+                float randomAngleOffset = Random.Range(-15f, 15f);
+                float angle = baseAngle + randomAngleOffset;
+
+                float radiusVariation = ringRadius * 0.3f * (ring + 1);
+                float randomRadius = ringRadius + Random.Range(-radiusVariation, radiusVariation);
+
+                float chaos = Random.Range(0f, 0.5f) * ring;
+                Vector3 randomOffset = (Random.onUnitSphere * chaos);
+                randomOffset = Vector3.ProjectOnPlane(randomOffset, normal);
+
+                Vector3 circlePoint = hitPoint + 
+                    (right * Mathf.Cos(angle * Mathf.Deg2Rad) + 
+                     forward * Mathf.Sin(angle * Mathf.Deg2Rad)) * randomRadius +
+                    randomOffset;
+
+                // Cast ray against all colliders
+                RaycastHit[] hits = Physics.RaycastAll(
+                    circlePoint + normal * 0.5f, 
+                    -normal,
+                    1f
+                );
+
+                // Try to paint each hit
+                foreach (var hit in hits)
+                {
+                    
+                        SurfacePainterMulti.instance.ActiveTarget(hit);
+                    
+                }
             }
         }
-    }
 
-    // Add some random splatter points
-    int randomSplatterCount = paintSpotsCount / 2;
-    for (int i = 0; i < randomSplatterCount; i++)
-    {
-        Vector3 randomDir = Random.onUnitSphere;
-        randomDir = Vector3.ProjectOnPlane(randomDir, normal).normalized;
-        float randomDist = Random.Range(0f, paintRadius * 1.2f);
-        
-        Vector3 splatterPoint = hitPoint + (randomDir * randomDist);
-        var ray = Physics.RaycastAll(splatterPoint + normal, -normal, 1f);
-        
-        foreach (var hit in ray)
+        // random splatter
+        int randomSplatterCount = paintSpotsCount / 2;
+        for (int i = 0; i < randomSplatterCount; i++)
         {
-            Vector2 paintUV = hit.textureCoord;
-            SurfacePainterMulti.instance.ActiveTarget(hit);
+            Vector3 randomDir = Random.onUnitSphere;
+            randomDir = Vector3.ProjectOnPlane(randomDir, normal).normalized;
+            float randomDist = Random.Range(0f, paintRadius * 1.2f);
+
+            Vector3 splatterPoint = hitPoint + (randomDir * randomDist);
+            RaycastHit[] hits = Physics.RaycastAll(splatterPoint + normal * 0.5f, -normal, 1f);
+
+            foreach (var hit in hits)
+            {
+                if (hit.collider.transform.IsChildOf(obj.transform))
+                {
+                    SurfacePainterMulti.instance.ActiveTarget(hit);
+                }
+            }
         }
-    }
-
-
     }
 }
