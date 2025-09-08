@@ -11,4 +11,9 @@ public class PlayerCurrency : MonoBehaviour
         pigment = Mathf.Max(0, pigment + amount);
         OnPigmentChanged?.Invoke(pigment);
     }
+    public void RemovePigment(int amount)
+    {
+        pigment = Mathf.Max(0, pigment - amount);
+        OnPigmentChanged?.Invoke(pigment);
+    }
 }

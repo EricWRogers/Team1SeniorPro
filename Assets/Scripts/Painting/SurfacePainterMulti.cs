@@ -46,6 +46,8 @@ public class SurfacePainterMulti : MonoBehaviour
     PaintableGroup activeGroup;
     public bool IsSpraying { get; private set; }
 
+    public UpgradeManager upgradeManager;
+
     void Reset() { if (!cam) cam = Camera.main; }
     public static SurfacePainterMulti instance;
     void Awake()
@@ -63,7 +65,7 @@ public class SurfacePainterMulti : MonoBehaviour
         if (!cam || !nozzle) return;
 
         // resource cost
-        if (paint && !paint.TrySpend(paintCostPerSecond * Time.deltaTime))
+        if (paint && !paint.TrySpend((paintCostPerSecond - upgradeManager.decreaseUsageTotal) * Time.deltaTime))
             return;
 
         IsSpraying = true;
@@ -129,7 +131,7 @@ public class SurfacePainterMulti : MonoBehaviour
         float px = maskRT.width  * uv.x;
         float py = maskRT.height * (1f - uv.y);
 
-        float brushPx = Mathf.Max(2f, maskRT.width * (brushSizePercent / 100f));
+        float brushPx = Mathf.Max(2f, maskRT.width * ((brushSizePercent + upgradeManager.increaseRadiusTotal) / 100f));
         if (scaleBrushByRendererBounds && rend)
         {
             // crude downscale for large meshes
@@ -185,7 +187,7 @@ public class SurfacePainterMulti : MonoBehaviour
             if (Vector3.Dot(nfwd, nto) < cosLimit) continue; // outside cone
 
             var hp = c.GetComponentInParent<Health>() ?? c.GetComponent<Health>();
-            if (hp) hp.Damage(enemyDps * Time.deltaTime);
+            if (hp) hp.Damage((enemyDps + upgradeManager.increaseDmgTotal) * Time.deltaTime);
         }
     }
 

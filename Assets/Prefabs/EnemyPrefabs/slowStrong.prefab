@@ -110,7 +110,7 @@ MonoBehaviour:
   damage: 10
   health: 40
   attackRange: 2
-  detectionRange: 15
+  detectionRange: 10
   Attack:
     m_PersistentCalls:
       m_Calls:
@@ -127,10 +127,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   nextWayPointDes: 3
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  flashTime: 2
+  wayPoints: []
   lootTable:
   - itemPrefab: {fileID: 4532501592599819455, guid: 47f1a003c9b47864abb047b48468859a, type: 3}
     dropChance: 50
