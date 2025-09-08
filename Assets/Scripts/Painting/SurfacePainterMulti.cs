@@ -112,28 +112,44 @@ public class SurfacePainterMulti : MonoBehaviour
     void PaintAtUV(RenderTexture maskRT, Vector2 uv, Renderer rend)
     {
         if (!brushTexture) return;
+        
+        // Debug UV coordinates and texture size
+        Debug.Log($"Painting on {rend.name} - UV: {uv}, Texture Size: {maskRT.width}x{maskRT.height}");
+        
         RenderTexture prev = RenderTexture.active;
         RenderTexture.active = maskRT;
-
+    
         GL.PushMatrix();
         GL.LoadPixelMatrix(0, maskRT.width, maskRT.height, 0);
-
+    
         float px = maskRT.width * uv.x;
         float py = maskRT.height * (1f - uv.y);
-
-        float brushPx = Mathf.Max(2f, maskRT.width * (brushSizePercent / 100f));
-        if (scaleBrushByRendererBounds && rend)
+    
+        // Set consistent base brush size regardless of texture resolution
+        float baseSize = maskRT.width * (brushSizePercent / 100f);
+        float brushPx = baseSize;
+    
+        // Get material's main texture scale
+        Vector2 texScale = Vector2.one;
+        if (rend.material.mainTextureScale != Vector2.zero)
         {
-            // crude downscale for large meshes
-            float largest = Mathf.Max(rend.bounds.size.x, rend.bounds.size.z, rend.bounds.size.y);
-            brushPx *= Mathf.Clamp01(1f / Mathf.Max(largest, 0.001f)); // larger object -> smaller brush
-            brushPx = Mathf.Clamp(brushPx, 1.5f, maskRT.width * 0.1f);
+            texScale = rend.material.mainTextureScale;
+            // Compensate for texture tiling
+            brushPx *= Mathf.Min(texScale.x, texScale.y);
         }
-
+    
+        // Ensure minimum size regardless of UV density or texture scale
+        float minSize = maskRT.width * 0.02f; // 2% of texture width
+        float maxSize = maskRT.width * 0.2f;  // 20% of texture width
+        brushPx = Mathf.Clamp(brushPx, minSize, maxSize);
+    
+        // Debug final brush size
+        Debug.Log($"Brush size: {brushPx}px on texture {maskRT.width}px wide (Material scale: {texScale})");
+    
         Rect rect = new Rect(px - brushPx * 0.5f, py - brushPx * 0.5f, brushPx, brushPx);
         Graphics.DrawTexture(rect, brushTexture);
+        
         GL.PopMatrix();
-
         RenderTexture.active = prev;
     }
 
