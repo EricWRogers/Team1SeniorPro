@@ -6,10 +6,10 @@ public class SurfacePainterMulti : MonoBehaviour
     public Camera cam;
     public Transform nozzle;
     public float maxSprayDistance = 15f;
-    public LayerMask paintMask = ~0;       
+    public LayerMask paintMask = ~0;
 
     [Header("Brush (mask painting)")]
-    public Texture2D brushTexture;         
+    public Texture2D brushTexture;
     [Range(0.05f, 20f)] public float brushSizePercent = 3.5f;
 
     [Tooltip("Scale brush by renderer size so huge meshes don’t get giant strokes.")]
@@ -26,7 +26,7 @@ public class SurfacePainterMulti : MonoBehaviour
     public LayerMask enemyMask;
 
     [Header("Ground safe discs (walkable)")]
-    public GameObject safeDiscPrefab;      
+    public GameObject safeDiscPrefab;
     public float safeDiscRadius = 0.7f;
     public float safeDiscLifetime = 8f;
     public LayerMask groundMask;
@@ -47,6 +47,14 @@ public class SurfacePainterMulti : MonoBehaviour
     public bool IsSpraying { get; private set; }
 
     void Reset() { if (!cam) cam = Camera.main; }
+    public static SurfacePainterMulti instance;
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }    
 
     void Update()
     {
@@ -137,7 +145,7 @@ public class SurfacePainterMulti : MonoBehaviour
         RenderTexture.active = prev;
     }
 
-    void TryMarkGround(RaycastHit h)
+    public void TryMarkGround(RaycastHit h)
     {
         var grid = GroundPaintGrid.Instance;
         if (!grid) return;

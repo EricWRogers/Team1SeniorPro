@@ -47,6 +47,8 @@ private void OnCollisionEnter(Collision collision)
                 Vector2 paintUV = hit.textureCoord;
                 Debug.Log($"Painting at UV: {paintUV} on {obj.name}");
 
+                SurfacePainterMulti.instance.TryMarkGround(hit);
+
                 SurfacePainter.instance.PaintAtUV(paintUV);
 
             }

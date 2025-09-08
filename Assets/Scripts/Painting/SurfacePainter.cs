@@ -99,7 +99,10 @@ public class SurfacePainter : MonoBehaviour
         RenderTexture.active = maskRT;
 
         GL.PushMatrix();
+        Debug.Log("Push Matrix");
         GL.LoadPixelMatrix(0, maskRT.width, maskRT.height, 0);
+        Debug.Log("Load Pixel Matrix");
+
 
         float px = maskRT.width  * uv.x;
         float py = maskRT.height * (1f - uv.y);
