@@ -16,6 +16,7 @@ public class SurfacePainter : MonoBehaviour
     GameObject lastHitObj;
     RenderTexture maskRT;
     Material targetMat;
+    public UpgradeManager upgradeManager;
     void Awake()
     {
         if (instance == null)
@@ -107,7 +108,7 @@ public class SurfacePainter : MonoBehaviour
         float px = maskRT.width  * uv.x;
         float py = maskRT.height * (1f - uv.y);
 
-        float brushPx = Mathf.Max(2f, maskRT.width * (brushSizePercent / 100f));
+        float brushPx = Mathf.Max(2f, maskRT.width * ((brushSizePercent + upgradeManager.increaseRadiusTotal) / 100f));
         Rect rect = new Rect(px - brushPx * 0.5f, py - brushPx * 0.5f, brushPx, brushPx);
 
         // Draw brush: brush should be BLACK in the center with alpha falloff

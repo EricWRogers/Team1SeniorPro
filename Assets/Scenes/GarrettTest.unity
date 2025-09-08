@@ -212,6 +212,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 128543918}
     - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: upgradeManager
+      value: 
+      objectReference: {fileID: 1977086453}
+    - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: nozzleTurnSpeed
       value: 60
       objectReference: {fileID: 0}
@@ -243,6 +247,10 @@ PrefabInstance:
       propertyPath: loseScreen
       value: 
       objectReference: {fileID: 1977086451}
+    - target: {fileID: 6131217306032986920, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: upgradeManager
+      value: 
+      objectReference: {fileID: 1977086453}
     - target: {fileID: 7183914097598965171, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: cam
       value: 
@@ -1943,7 +1951,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &898138332
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9423,10 +9431,10 @@ MonoBehaviour:
   radiusCost: 1
   decreaseUsage: 2
   usageCost: 1
-  increaseHealthTotal: 0
-  increaseDmgTotal: 0
-  increaseRadiusTotal: 0
-  decreaseUsageTotal: 0
+  increaseHealthTotal: 5
+  increaseDmgTotal: 3
+  increaseRadiusTotal: 2
+  decreaseUsageTotal: 2
 --- !u!1 &1990748656
 GameObject:
   m_ObjectHideFlags: 0

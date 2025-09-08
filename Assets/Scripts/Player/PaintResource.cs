@@ -12,16 +12,24 @@ public class PaintResource : MonoBehaviour
     public event Action<float> OnHealed;   // amount
 
     public LoseScreen loseScreen;
+    public UpgradeManager upgradeManager;
 
     bool _depletedRaised;
 
     void RaiseChanged() => OnPaintChanged?.Invoke(currentPaint, maxPaint);
 
+    void Start()
+    {
+        maxPaint += upgradeManager.increaseHealthTotal;
+        currentPaint = maxPaint;
+        RaiseChanged();
+    }
+
     public void AddPaint(float amount)
     {
         if (amount <= 0f) return;
         currentPaint = Mathf.Clamp(currentPaint + amount, 0f, maxPaint);
-        _depletedRaised = currentPaint <= 0f && _depletedRaised; 
+        _depletedRaised = currentPaint <= 0f && _depletedRaised;
         OnHealed?.Invoke(amount);
         RaiseChanged();
     }

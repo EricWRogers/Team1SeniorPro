@@ -56,6 +56,10 @@ public class SurfacePainterMulti : MonoBehaviour
             instance = this;
         else
             Destroy(this);
+
+        brushSizePercent += upgradeManager.increaseRadiusTotal;
+        paintCostPerSecond -= upgradeManager.decreaseUsageTotal;
+        enemyDps += upgradeManager.increaseDmgTotal;
     }
 
     void Update()
@@ -65,7 +69,7 @@ public class SurfacePainterMulti : MonoBehaviour
         if (!cam || !nozzle) return;
 
         // resource cost
-        if (paint && !paint.TrySpend((paintCostPerSecond - upgradeManager.decreaseUsageTotal) * Time.deltaTime))
+        if (paint && !paint.TrySpend(paintCostPerSecond * Time.deltaTime))
             return;
 
         IsSpraying = true;
@@ -112,7 +116,7 @@ public class SurfacePainterMulti : MonoBehaviour
         float px = maskRT.width * uv.x;
         float py = maskRT.height * (1f - uv.y);
 
-        float brushPx = Mathf.Max(2f, maskRT.width * ((brushSizePercent + upgradeManager.increaseRadiusTotal) / 100f));
+        float brushPx = Mathf.Max(2f, maskRT.width * (brushSizePercent / 100f));
         if (scaleBrushByRendererBounds && rend)
         {
             // crude downscale for large meshes
@@ -173,7 +177,7 @@ public class SurfacePainterMulti : MonoBehaviour
             if (Vector3.Dot(nfwd, nto) < cosLimit) continue; // outside cone
 
             var hp = c.GetComponentInParent<Health>() ?? c.GetComponent<Health>();
-            if (hp) hp.Damage((enemyDps + upgradeManager.increaseDmgTotal) * Time.deltaTime);
+            if (hp) hp.Damage(enemyDps * Time.deltaTime);
         }
     }
 
