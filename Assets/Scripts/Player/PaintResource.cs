@@ -12,7 +12,7 @@ public class PaintResource : MonoBehaviour
     public event Action<float> OnHealed;   // amount
 
     public LoseScreen loseScreen;
-    public UpgradeManager upgradeManager;
+    private UpgradeManager m_upgradeManager;
 
     bool _depletedRaised;
 
@@ -20,7 +20,8 @@ public class PaintResource : MonoBehaviour
 
     void Start()
     {
-        maxPaint += upgradeManager.increaseHealthTotal;
+        m_upgradeManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UpgradeManager>();
+        maxPaint += m_upgradeManager.increaseHealthTotal;
         currentPaint = maxPaint;
         RaiseChanged();
     }

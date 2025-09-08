@@ -46,7 +46,7 @@ public class SurfacePainterMulti : MonoBehaviour
     PaintableGroup activeGroup;
     public bool IsSpraying { get; private set; }
 
-    public UpgradeManager upgradeManager;
+    private UpgradeManager m_upgradeManager;
 
     void Reset() { if (!cam) cam = Camera.main; }
     public static SurfacePainterMulti instance;
@@ -57,9 +57,14 @@ public class SurfacePainterMulti : MonoBehaviour
         else
             Destroy(this);
 
-        brushSizePercent += upgradeManager.increaseRadiusTotal;
-        paintCostPerSecond -= upgradeManager.decreaseUsageTotal;
-        enemyDps += upgradeManager.increaseDmgTotal;
+        
+    }
+    void Start()
+    {
+        m_upgradeManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UpgradeManager>();
+        brushSizePercent += m_upgradeManager.increaseRadiusTotal;
+        paintCostPerSecond -= m_upgradeManager.decreaseUsageTotal;
+        enemyDps += m_upgradeManager.increaseDmgTotal;
     }
 
     void Update()
