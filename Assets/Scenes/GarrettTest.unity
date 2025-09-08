@@ -171,6 +171,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Iris(temp) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6131217306032986920, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: loseScreen
+      value: 
+      objectReference: {fileID: 1977086451}
+    - target: {fileID: 7659659078735992034, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: pigment
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816764625791351553, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: upgradeUI
+      value: 
+      objectReference: {fileID: 898138331}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1815,7 +1827,6 @@ GameObject:
   - component: {fileID: 898138332}
   - component: {fileID: 898138335}
   - component: {fileID: 898138334}
-  - component: {fileID: 898138333}
   m_Layer: 5
   m_Name: UpgradeScreen
   m_TagString: Untagged
@@ -1851,23 +1862,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &898138333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 898138331}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45245cbfa4f4ef14eacbbf7a45ada129, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 898138331}
-  painter: {fileID: 128543917}
-  assembler: {fileID: 2137025377}
-  brushSizeAddPercent: 0.8
-  paintCostMultiplier: 0.9
 --- !u!114 &898138334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1988,7 +1982,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 907471620}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1977086451}
+        m_TargetAssemblyTypeName: LoseScreen, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &907471620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3180,7 +3186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1467962803
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3711,7 +3717,7 @@ PrefabInstance:
     - target: {fileID: 1843266408847379892, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
       propertyPath: gameOverUI
       value: 
-      objectReference: {fileID: 1766590700}
+      objectReference: {fileID: 898138331}
     - target: {fileID: 1843266408847379892, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
       propertyPath: gameRestart
       value: 
@@ -3764,10 +3770,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5738778609908758863, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
-      propertyPath: maxEnemyCount
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 6572310589110225400, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -3775,10 +3777,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6572310589110225400, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1977086453}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
 --- !u!1001 &1672674298
 PrefabInstance:
@@ -3902,11 +3901,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0f70db1a3887744a825893f4ba7f3b2, type: 3}
---- !u!1 &1766590700 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8361566589930470588, guid: 969c3d4b567b8e847a3d0299a52d5ee1, type: 3}
-  m_PrefabInstance: {fileID: 1193371304}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1766590703 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2939426751879154332, guid: 969c3d4b567b8e847a3d0299a52d5ee1, type: 3}
@@ -4266,11 +4260,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795964961}
   m_CullTransparentMesh: 1
---- !u!1 &1889983089 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6572310589110225400, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
-  m_PrefabInstance: {fileID: 1562717024}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1950245459
 GameObject:
   m_ObjectHideFlags: 0
@@ -4412,7 +4401,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1843266408847379892, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
   m_PrefabInstance: {fileID: 1562717024}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889983089}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e72dfdd526379f46bc534aca0726102, type: 3}
@@ -4423,36 +4412,23 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1300582559487780994, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
   m_PrefabInstance: {fileID: 1562717024}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889983089}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e3d50c1184cc6f409e0d8cf8fb044a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1977086453
+--- !u!114 &1977086453 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6339858538672968632, guid: c788bcc3703313c4aa18abc1bc26b902, type: 3}
+  m_PrefabInstance: {fileID: 1562717024}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889983089}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8754daae826e82647bf8768940fe0ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  increaseHealth: 5
-  healthCost: 1
-  increaseDmg: 3
-  dmgCost: 1
-  increaseRadius: 2
-  radiusCost: 1
-  decreaseUsage: 2
-  usageCost: 1
-  increaseHealthTotal: 5
-  increaseDmgTotal: 3
-  increaseRadiusTotal: 2
-  decreaseUsageTotal: 2
 --- !u!1 &1990748656
 GameObject:
   m_ObjectHideFlags: 0

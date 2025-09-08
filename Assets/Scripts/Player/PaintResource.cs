@@ -21,6 +21,7 @@ public class PaintResource : MonoBehaviour
     void Start()
     {
         m_upgradeManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UpgradeManager>();
+        loseScreen = GameObject.FindGameObjectWithTag("GameManager").GetComponent<LoseScreen>();
         maxPaint += m_upgradeManager.increaseHealthTotal;
         currentPaint = maxPaint;
         RaiseChanged();
@@ -41,11 +42,12 @@ public class PaintResource : MonoBehaviour
         currentPaint = Mathf.Clamp(currentPaint - amount, 0f, maxPaint);
         OnDamaged?.Invoke(amount);
         RaiseChanged();
-        if (currentPaint <= 0f && !_depletedRaised)
+        if (currentPaint <= 0f)
         {
             _depletedRaised = true;
-            OnPaintDepleted?.Invoke();
             loseScreen.GameOver();
+            OnPaintDepleted?.Invoke();
+            
         }
     }
 

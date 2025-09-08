@@ -3,6 +3,7 @@ using UnityEngine;
 public class UpgradeManager : MonoBehaviour
 {
     public static UpgradeManager instance { get; private set; }
+    public int PlayerCurrency;
 
     [Header("Upgrade Amounts")]
     public float increaseHealth;
@@ -35,32 +36,53 @@ public class UpgradeManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        
+
         m_player = GameObject.FindGameObjectWithTag("Player");
+        
+    }
+    void Update()
+    {
+        PlayerCurrency = m_player.GetComponent<PlayerCurrency>().pigment;
     }
 
     public void HealthUpgrade()
     {
-        increaseHealthTotal += increaseHealth;
-        m_player.GetComponent<PlayerCurrency>().RemovePigment(healthCost);
-        healthCost++;
+        if (m_player.GetComponent<PlayerCurrency>().pigment > healthCost)
+        {
+            increaseHealthTotal += increaseHealth;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(healthCost);
+            healthCost++;
+        }
+        
     }
     public void DamageUpgrade()
     {
-        increaseDmg += increaseDmgTotal;
-        m_player.GetComponent<PlayerCurrency>().RemovePigment(dmgCost);
-        dmgCost++;
+        if (m_player.GetComponent<PlayerCurrency>().pigment > dmgCost)
+        {
+            increaseDmg += increaseDmgTotal;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(dmgCost);
+            dmgCost++;
+        }
+        
     }
     public void RadiusUpgrade()
     {
-        increaseRadius += increaseRadiusTotal;
-        m_player.GetComponent<PlayerCurrency>().RemovePigment(radiusCost);
-        radiusCost++;
+        if (m_player.GetComponent<PlayerCurrency>().pigment > radiusCost)
+        {
+            increaseRadius += increaseRadiusTotal;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(radiusCost);
+            radiusCost++;
+        }
+        
     }
     public void UsageUpgrade()
     {
-        decreaseUsage += decreaseUsageTotal;
-        m_player.GetComponent<PlayerCurrency>().RemovePigment(usageCost);
-        usageCost++;
+        if (m_player.GetComponent<PlayerCurrency>().pigment > usageCost)
+        {
+            decreaseUsage += decreaseUsageTotal;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(usageCost);
+            usageCost++;
+        }
+        
     }
 }

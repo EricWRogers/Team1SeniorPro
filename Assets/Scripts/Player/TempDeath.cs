@@ -5,6 +5,7 @@ public class TempDeath : MonoBehaviour
 {
     public PaintResource playerPaint;
     public float reloadDelay = 0.75f;
+    public GameObject upgradeUI;
 
     void Start()
     {
