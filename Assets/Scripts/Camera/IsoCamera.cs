@@ -28,6 +28,32 @@ public class IsoCamera : MonoBehaviour
         if (detachFromParentOnEnable) transform.SetParent(null, true);
         TryRebind(true);
     }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (yaw == 0)
+            {
+                yaw = 270;
+            }
+            else
+            {
+                yaw -= 90;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (yaw == 270)
+            {
+                yaw = 0;
+            }
+            else
+            {
+                yaw += 90;
+            }
+            
+        }
+    }
 
     void LateUpdate()
     {

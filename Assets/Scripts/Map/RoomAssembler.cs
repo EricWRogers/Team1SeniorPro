@@ -35,7 +35,7 @@ public class RoomAssembler : MonoBehaviour
     public float safePadRadius = 2f;
     public float safePadFollowSeconds = 0.25f;
 
-    private float m_wait = .5f;
+    private float m_wait = 1f;
     private bool m_scanned = false;
     private float m_curWait;
 
@@ -49,7 +49,6 @@ public class RoomAssembler : MonoBehaviour
     void Start()
     {
         GenerateRoom();
-        Debug.Log("2");
         m_curWait = m_wait;
     }
     void Update()
@@ -62,7 +61,6 @@ public class RoomAssembler : MonoBehaviour
         else if (!m_scanned)
         {
             AstarPath.active.Scan();
-            Debug.Log("4");
             m_scanned = true;
         }
     }
@@ -123,7 +121,6 @@ public class RoomAssembler : MonoBehaviour
 
 
         StartCoroutine(SnapBackAfterDelay(_roomVersion));
-        Debug.Log("1");
         
     }
 

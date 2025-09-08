@@ -216,7 +216,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: SpawnLoot
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0, z: 0}
-  speed: 55
+  speed: 60
   damage: 10
   health: 100
   attackRange: 0
@@ -257,8 +257,8 @@ MonoBehaviour:
   - itemPrefab: {fileID: 2167828022742334288, guid: 840bbbf430c8ded4db7165856d2ed960, type: 3}
     dropChance: 100
   bulletPrefab: {fileID: 452692420671353490, guid: 545f288de1cbea940b85ef2a85250643, type: 3}
-  fireRate: 2
-  bulletSpeed: 5
+  fireRate: 1
+  bulletSpeed: 6
   firePoint: {fileID: 723333000541592124}
   meleeRange: 2
 --- !u!1 &4670336876437917323

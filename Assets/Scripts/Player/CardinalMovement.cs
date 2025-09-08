@@ -24,6 +24,7 @@ public class CardinalMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        transform.LookAt(Camera.main.transform);
         // Input
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
