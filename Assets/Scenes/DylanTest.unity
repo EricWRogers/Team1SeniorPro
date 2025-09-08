@@ -7562,6 +7562,10 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: brushSizePercent
+      value: 9.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: enemyMask.m_Bits
       value: 256
       objectReference: {fileID: 0}
@@ -7604,6 +7608,14 @@ PrefabInstance:
     - target: {fileID: 7183914097598965171, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: brushSizePercent
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7255503586854937591, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.879
+      objectReference: {fileID: 0}
+    - target: {fileID: 7255503586854937591, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7648,7 +7660,7 @@ MonoBehaviour:
   cam: {fileID: 1620507422}
   paintBombPrefab: {fileID: 1576176229757580659, guid: 6ae52709b71c3b7a1b13d99f6ddd4fe2, type: 3}
   throwOrigin: {fileID: 536724001}
-  arcHeight: 3
+  arc_Height: 2
   throwSpeed: 10
   cooldownTime: 1
 --- !u!1 &2046482873
