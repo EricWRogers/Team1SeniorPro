@@ -1,57 +1,63 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class UpgradeMenu : MonoBehaviour
 {
-    [Header("UI root")]
-    public GameObject panel;                    // full-screen panel
-    [Header("Gameplay refs")]
-    public SurfacePainterMulti painter;         // player painter
-    public RoomAssembler assembler;             // to advance rooms
+    private UpgradeManager m_UM;
+    private GameObject m_player;
 
-    [Header("Upgrade amounts")]
-    [Range(0.1f, 5f)]  public float brushSizeAddPercent = 0.8f;  
-    [Range(0.5f, 0.99f)] public float paintCostMultiplier = 0.9f; 
-
-    bool _open;
-    bool _chosen;
-
-    void Awake()
+    void Start()
     {
-        if (panel) panel.SetActive(false);
-        if (!painter) painter = FindObjectOfType<SurfacePainterMulti>();
-        if (!assembler) assembler = FindObjectOfType<RoomAssembler>();
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<LoseScreen>().gameOverUI = gameObject.transform.GetChild(0).gameObject;
+        m_player = GameObject.FindGameObjectWithTag("Player");
+        m_UM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<UpgradeManager>();
     }
-
-    public void Open()
+    public void HealthUpgrade()
     {
-        if (_open) return;
-        _open = true; _chosen = false;
-        if (panel) panel.SetActive(true);
-        Time.timeScale = 0f;
+        if (m_player.GetComponent<PlayerCurrency>().pigment >= m_UM.healthCost)
+        {
+            m_UM.increaseHealthTotal += m_UM.increaseHealth;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(m_UM.healthCost);
+            m_UM.healthCost++;
+        }
+
     }
-
-    public void ChooseBrush()
+    public void DamageUpgrade()
     {
-        if (_chosen) return;
-        _chosen = true;
-        if (painter) painter.brushSizePercent += brushSizeAddPercent;
-        CloseAndGo();
+        if (m_player.GetComponent<PlayerCurrency>().pigment >= m_UM.dmgCost)
+        {
+            m_UM.increaseDmgTotal += m_UM.increaseDmg;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(m_UM.dmgCost);
+            m_UM.dmgCost++;
+        }
+
     }
-
-    public void ChooseResourcefulness()
+    public void RadiusUpgrade()
     {
-        if (_chosen) return;
-        _chosen = true;
-        if (painter) painter.paintCostPerSecond *= paintCostMultiplier;
-        CloseAndGo();
+        if (m_player.GetComponent<PlayerCurrency>().pigment >= m_UM.radiusCost)
+        {
+            m_UM.increaseRadiusTotal += m_UM.increaseRadius;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(m_UM.radiusCost);
+            m_UM.radiusCost++;
+        }
+
     }
-
-    void CloseAndGo()
+    public void UsageUpgrade()
     {
-        if (panel) panel.SetActive(false);
+        if (m_player.GetComponent<PlayerCurrency>().pigment >= m_UM.usageCost)
+        {
+            m_UM.decreaseUsageTotal += m_UM.decreaseUsage;
+            m_player.GetComponent<PlayerCurrency>().RemovePigment(m_UM.usageCost);
+            m_UM.usageCost++;
+        }
+
+    }
+    public void Restart()
+    {
         Time.timeScale = 1f;
-        _open = false;
-        // Now move to next room
-        if (assembler) assembler.NextRoom(); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

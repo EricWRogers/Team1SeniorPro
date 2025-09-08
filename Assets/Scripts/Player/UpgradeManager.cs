@@ -45,44 +45,5 @@ public class UpgradeManager : MonoBehaviour
         PlayerCurrency = m_player.GetComponent<PlayerCurrency>().pigment;
     }
 
-    public void HealthUpgrade()
-    {
-        if (m_player.GetComponent<PlayerCurrency>().pigment > healthCost)
-        {
-            increaseHealthTotal += increaseHealth;
-            m_player.GetComponent<PlayerCurrency>().RemovePigment(healthCost);
-            healthCost++;
-        }
-        
-    }
-    public void DamageUpgrade()
-    {
-        if (m_player.GetComponent<PlayerCurrency>().pigment > dmgCost)
-        {
-            increaseDmg += increaseDmgTotal;
-            m_player.GetComponent<PlayerCurrency>().RemovePigment(dmgCost);
-            dmgCost++;
-        }
-        
-    }
-    public void RadiusUpgrade()
-    {
-        if (m_player.GetComponent<PlayerCurrency>().pigment > radiusCost)
-        {
-            increaseRadius += increaseRadiusTotal;
-            m_player.GetComponent<PlayerCurrency>().RemovePigment(radiusCost);
-            radiusCost++;
-        }
-        
-    }
-    public void UsageUpgrade()
-    {
-        if (m_player.GetComponent<PlayerCurrency>().pigment > usageCost)
-        {
-            decreaseUsage += decreaseUsageTotal;
-            m_player.GetComponent<PlayerCurrency>().RemovePigment(usageCost);
-            usageCost++;
-        }
-        
-    }
+    
 }

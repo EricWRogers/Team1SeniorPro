@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8754daae826e82647bf8768940fe0ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerCurrency: 0
   increaseHealth: 5
   healthCost: 1
   increaseDmg: 3

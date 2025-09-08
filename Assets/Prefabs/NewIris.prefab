@@ -4970,6 +4970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPaint: {fileID: 6131217306032986920}
   reloadDelay: 0.75
+  upgradeUI: {fileID: 0}
 --- !u!114 &8934031494668587395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5008,7 +5009,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4964255680993957033}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8c911b302713d04e9ae7478ce43d100, type: 3}
   m_Name: 
@@ -5018,6 +5019,7 @@ MonoBehaviour:
   brushTexture: {fileID: 2800000, guid: bff6fffaea4428746b7fb0f6e4dd8035, type: 3}
   brushSizePercent: 11
   maxSprayDistance: 8
+  upgradeManager: {fileID: 0}
 --- !u!114 &4798058977526197516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5037,8 +5039,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   brushTexture: {fileID: 2800000, guid: bff6fffaea4428746b7fb0f6e4dd8035, type: 3}
-  brushSizePercent: 16
-  scaleBrushByRendererBounds: 1
+  brushSizePercent: 4
+  scaleBrushByRendererBounds: 0
   paint: {fileID: 6131217306032986920}
   paintCostPerSecond: 12
   enemyDps: 15
