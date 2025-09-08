@@ -54,7 +54,7 @@ public class SurfacePainterMulti : MonoBehaviour
             instance = this;
         else
             Destroy(this);
-    }    
+    }
 
     void Update()
     {
@@ -94,26 +94,7 @@ public class SurfacePainterMulti : MonoBehaviour
 
         foreach (var h in hits)
         {
-            var mc = h.collider as MeshCollider;
-            var rend = h.collider.GetComponent<Renderer>();
-            if (!mc || !rend) continue;
-
-            // assign target
-            if (rend != activeRenderer)
-            {
-                activeRenderer = rend;
-                activeGroup = rend.GetComponentInParent<PaintableGroup>();
-                activeMask = null;
-                if (activeGroup) activeGroup.TryGetMask(rend, out activeMask);
-            }
-
-            // paint the mask
-            if (activeMask) PaintAtUV(activeMask, h.textureCoord, rend);
-
-
-            TryMarkGround(h);
-
-            break; // only the nearest valid mesh
+            ActiveTarget(h);
         }
     }
 
@@ -126,7 +107,7 @@ public class SurfacePainterMulti : MonoBehaviour
         GL.PushMatrix();
         GL.LoadPixelMatrix(0, maskRT.width, maskRT.height, 0);
 
-        float px = maskRT.width  * uv.x;
+        float px = maskRT.width * uv.x;
         float py = maskRT.height * (1f - uv.y);
 
         float brushPx = Mathf.Max(2f, maskRT.width * (brushSizePercent / 100f));
@@ -145,7 +126,7 @@ public class SurfacePainterMulti : MonoBehaviour
         RenderTexture.active = prev;
     }
 
-    public void TryMarkGround(RaycastHit h)
+    public void TryMarkGround(RaycastHit h, float? groundRadius)
     {
         var grid = GroundPaintGrid.Instance;
         if (!grid) return;
@@ -155,13 +136,18 @@ public class SurfacePainterMulti : MonoBehaviour
         // If we hit ground directly
         if (((1 << h.collider.gameObject.layer) & grid.groundMask) != 0)
         {
-            grid.MarkCircle(h.point, groundSafeRadius);
+            if (groundRadius.HasValue)
+                grid.MarkCircle(h.point, groundRadius.Value);
+            else
+                grid.MarkCircle(h.point, groundSafeRadius);
             return;
         }
 
-        
+
         if (Physics.Raycast(h.point + Vector3.up * 2f, Vector3.down, out var down, 4f, grid.groundMask))
             grid.MarkCircle(down.point, groundSafeRadius);
+        else if (Physics.Raycast(h.point + Vector3.down * 2f, Vector3.up, out var up, 4f, grid.groundMask))
+            grid.MarkCircle(up.point, groundSafeRadius);
     }
 
 
@@ -194,5 +180,24 @@ public class SurfacePainterMulti : MonoBehaviour
         var disc = Instantiate(safeDiscPrefab, point + Vector3.up * 0.02f, Quaternion.identity);
         disc.transform.localScale = Vector3.one * (safeDiscRadius * 2f); // diameter
         if (safeDiscLifetime > 0f) Destroy(disc, safeDiscLifetime);
+    }
+
+    public void ActiveTarget(RaycastHit hit)
+    {
+        var mc = hit.collider as MeshCollider;
+        var rend = hit.collider.GetComponent<Renderer>();
+        if (!mc || !rend) return;
+
+        // assign target
+        if (rend != activeRenderer)
+        {
+            activeRenderer = rend;
+            activeGroup = rend.GetComponentInParent<PaintableGroup>();
+            activeMask = null;
+            if (activeGroup) activeGroup.TryGetMask(rend, out activeMask);
+        }
+        if (!activeMask) return;
+        PaintAtUV(activeMask, hit.textureCoord, rend);
+        if (groundMask != 0) TryMarkGround(hit, null);
     }
 }

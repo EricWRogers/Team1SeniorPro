@@ -55,7 +55,10 @@ Shader "URP/PaintReveal"
                 half4 overT  = SAMPLE_TEXTURE2D(_OverlayTex, sampler_OverlayTex, uv);
                 half4 maskC  = SAMPLE_TEXTURE2D(_Mask_Texture, sampler_Mask_Texture, uv);
                 // If overlay texture is just white, tint by OverlayColor
-                half4 overlay = overT * _OverlayColor;
+                half luminance = dot(baseC.rgb, half3(0.299h, 0.587h, 0.114h));
+                half3 monochrome = half3(luminance, luminance, luminance);
+                half4 overlay = half4(monochrome, baseC.a);
+
                 // mask.r = 1 -> show overlay (white); mask.r = 0 -> show base (color)
                 half t = 1.0h - maskC.r; // 0 = overlay, 1 = base
                 return lerp(overlay, baseC, t);

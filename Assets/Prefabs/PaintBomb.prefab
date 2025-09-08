@@ -126,6 +126,10 @@ MonoBehaviour:
   paintSpotsCount: 4
   splashEffect: {fileID: 0}
   surfacePainter: {fileID: 0}
+  enemyDamage: 20
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!54 &7206957763906330808
 Rigidbody:
   m_ObjectHideFlags: 0
