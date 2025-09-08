@@ -13,6 +13,12 @@ public class PaintBombThrower : MonoBehaviour
     public float cooldownTime = 1f;
     
     private float nextThrowTime;
+    private PaintResource playerPaint;
+
+    void Awake()
+    {
+        PaintResource pr = GetComponent<PaintResource>();
+    }
 
     void Reset()
     {
