@@ -195,7 +195,7 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   speed: 55
   damage: 2
-  health: 10
+  health: 20
   attackRange: 2
   detectionRange: 15
   Attack:
@@ -218,6 +218,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   flashTime: 2
+  lootTable:
+  - itemPrefab: {fileID: 2167828022742334288, guid: 840bbbf430c8ded4db7165856d2ed960, type: 3}
+    dropChance: 100
+  - itemPrefab: {fileID: 4532501592599819455, guid: 47f1a003c9b47864abb047b48468859a, type: 3}
+    dropChance: 50
 --- !u!114 &2289076634919118528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,3 +340,18 @@ MonoBehaviour:
   OnHeal:
     m_PersistentCalls:
       m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5262895755028531029}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: SpawnLoot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

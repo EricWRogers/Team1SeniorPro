@@ -5,7 +5,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyPrefabs;
     public Vector2 spawnIntervalRange = new Vector2 (5, 15);
-    public float m_currentInterval;
+    private float m_currentInterval;
     private EnemyManager m_enemyManager;
 
     void Start()

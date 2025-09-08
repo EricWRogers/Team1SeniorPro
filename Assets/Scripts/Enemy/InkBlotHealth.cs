@@ -44,7 +44,7 @@ public class InkBlotHealth : MonoBehaviour
             if (mesh != null)
             {
                 // This changes the material's color
-                mesh.material.color = Color.red;
+                //mesh.material.color = Color.red;
             }
         }
     }
