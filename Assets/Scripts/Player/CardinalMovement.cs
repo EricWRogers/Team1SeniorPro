@@ -13,6 +13,7 @@ public class CardinalMovement : MonoBehaviour
     private Rigidbody rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
+    private PaintResource paint;
 
 
     void Awake()
@@ -22,11 +23,16 @@ public class CardinalMovement : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.constraints = RigidbodyConstraints.FreezeRotation; // lock rotation
+        
+    }
+    void Start()
+    {
+        paint = gameObject.GetComponent<PaintResource>();
     }
 
     void FixedUpdate()
     {
-        CheckOnBlue();
+        CheckOnPaint();
         transform.LookAt(Camera.main.transform);
         // Input
         float h = Input.GetAxisRaw("Horizontal");
@@ -73,7 +79,7 @@ public class CardinalMovement : MonoBehaviour
     }
 
 
-    public void CheckOnBlue()
+    public void CheckOnPaint()
     {
 
         Ray ray = new Ray(transform.position, Vector3.down);
@@ -93,7 +99,7 @@ public class CardinalMovement : MonoBehaviour
                 int pixelY = Mathf.FloorToInt(hit.textureCoord.y * readableTexture.height);
 
                 Color color = readableTexture.GetPixel(pixelX, pixelY);
-                if (color.b > 0.8f)
+                if (color.b > 0.8f && color.r < 0.3f && color.g < 0.3f)
                 {
                     m_speed = onBlueSpeed;
                 }
@@ -101,13 +107,18 @@ public class CardinalMovement : MonoBehaviour
                 {
                     m_speed = moveSpeed;
                 }
+                
+                if (color.r > 0.8f && color.g < 0.3f && color.b < 0.2f)
+                {
+                   paint.Damage(1f * Time.fixedDeltaTime);
+                }
 
 
             }
             else
             {
                 m_speed = moveSpeed;
-             
+
             }
             
 
