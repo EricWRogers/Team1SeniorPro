@@ -18,9 +18,9 @@ public class Boss : Enemy
     }
 
     // Update is called once per frame
-    new void Update()
+    new void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
         firePoint.LookAt(m_player.transform);
         m_curFireRate -= Time.deltaTime;
         Shoot();

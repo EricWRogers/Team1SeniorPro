@@ -91,12 +91,12 @@ public class CardinalMovement : MonoBehaviour
             if (texture is RenderTexture renderTexture)
             {
                 RenderTexture.active = renderTexture;
-                Texture2D readableTexture = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
-                readableTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+                Texture2D readableTexture = new Texture2D(256, 256, TextureFormat.RGBAHalf, false);
+                readableTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
                 readableTexture.Apply();
 
-                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * readableTexture.width);
-                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * readableTexture.height);
+                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * 256);
+                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * 256);
 
                 Color color = readableTexture.GetPixel(pixelX, pixelY);
                 if (color.b > 0.8f && color.r < 0.3f && color.g < 0.3f)

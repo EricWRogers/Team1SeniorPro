@@ -3,12 +3,16 @@ using UnityEngine.Events;
 using Pathfinding;
 using System.Collections.Generic;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class Enemy : MonoBehaviour
 {
     [Header("General Enemy Settings")]
     public Vector3 target;
     public float speed;
+    public float blueSpeedMult = 1.5f;
+    private float m_speed = 40f;
+    
     public float damage;
     public float health;
     public float attackRange;
@@ -31,6 +35,8 @@ public class Enemy : MonoBehaviour
     private RaycastHit hit;
     protected Health m_health;
     private SpriteRenderer spriteRenderer;
+    private bool isOnRed;
+
 
     [Header("Loot")]
     public List<InkBlotDrops> lootTable = new List<InkBlotDrops>();
@@ -49,8 +55,13 @@ public class Enemy : MonoBehaviour
         m_seeker = GetComponent<Seeker>();
         InvokeRepeating("UpdatePath", 0f, .5f);
     }
-    public void Update()
+    public void FixedUpdate()
     {
+        if (isOnRed)
+        {
+            m_health.Damage(5f * Time.fixedDeltaTime);
+        }
+        
         transform.LookAt(Camera.main.transform);
         if (m_path == null)
         {
@@ -180,5 +191,62 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1.0f); // 0.5 seconds
 
         spriteRenderer.color = Color.white;
+    }
+    public void CheckOnPaint()
+    {
+
+        /*Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+        {
+            Renderer renderer = hit.collider.GetComponent<Renderer>();
+            Texture texture = renderer.material.GetTexture("_Mask_Texture");
+
+            if (texture is RenderTexture renderTexture)
+            {
+                RenderTexture.active = renderTexture;
+                Texture2D readableTexture = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
+                readableTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+                readableTexture.Apply();
+
+                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * readableTexture.width);
+                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * readableTexture.height);
+
+                Color color = readableTexture.GetPixel(pixelX, pixelY);
+                if (color.b > 0.8f && color.r < 0.3f && color.g < 0.3f)
+                {
+                    m_speed = speed * blueSpeedMult;
+                }
+                else
+                {
+                    m_speed = speed;
+                }
+
+                if (color.r > 0.8f && color.g < 0.3f && color.b < 0.2f)
+                {
+                    isOnRed = true;
+                }
+                else
+                {
+                    isOnRed = false;
+                }
+
+
+            }
+            else
+            {
+                m_speed = speed;
+                isOnRed = false;
+
+            }
+
+
+        }
+        else
+        {
+            m_speed = speed; 
+            isOnRed = false;
+         
+        }*/
+       
     }
 }

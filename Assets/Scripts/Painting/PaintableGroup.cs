@@ -52,7 +52,7 @@ public class PaintableGroup : MonoBehaviour
 
                 // find a base texture on the original material (common prop names)
                 Texture baseTex = null;
-                string[] baseNames = { "_BaseMap", "_MainTex", "_BaseColorMap", "_BaseTex" };
+                string[] baseNames = { "_BaseMap", "_BaseColorMap", "_BaseTex" };
                 foreach (var n in baseNames)
                     if (src && src.HasProperty(n)) { baseTex = src.GetTexture(n); if (baseTex) break; }
 
