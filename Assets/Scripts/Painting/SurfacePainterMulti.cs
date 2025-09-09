@@ -73,6 +73,21 @@ public class SurfacePainterMulti : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            int currentIndex = BrushTextures.IndexOf(currentBrushTexture);
+            int nextIndex = (currentIndex + 1) % BrushTextures.Count;
+            currentBrushTexture = BrushTextures[nextIndex];
+            Debug.Log($"Switched to brush texture: {currentBrushTexture.name}");
+        }
+         if (Input.GetKeyDown(KeyCode.E))
+        {
+            int currentIndex = BrushTextures.IndexOf(currentBrushTexture);
+            int previousIndex = (currentIndex - 1 + BrushTextures.Count) % BrushTextures.Count;
+            currentBrushTexture = BrushTextures[previousIndex];
+            Debug.Log($"Switched to brush texture: {currentBrushTexture.name}");
+        }
+
         IsSpraying = false;
         if (!Input.GetMouseButton(0)) return;
         if (!cam || !nozzle) return;
@@ -112,20 +127,7 @@ public class SurfacePainterMulti : MonoBehaviour
             ActiveTarget(h);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            int currentIndex = BrushTextures.IndexOf(currentBrushTexture);
-            int nextIndex = (currentIndex + 1) % BrushTextures.Count;
-            currentBrushTexture = BrushTextures[nextIndex];
-            Debug.Log($"Switched to brush texture: {currentBrushTexture.name}");
-        }
-         if (Input.GetKeyDown(KeyCode.E))
-        {
-            int currentIndex = BrushTextures.IndexOf(currentBrushTexture);
-            int previousIndex = (currentIndex - 1 + BrushTextures.Count) % BrushTextures.Count;
-            currentBrushTexture = BrushTextures[previousIndex];
-            Debug.Log($"Switched to brush texture: {currentBrushTexture.name}");
-        }
+
     }
 
     void PaintAtUV(RenderTexture maskRT, Vector2 uv, Renderer rend)
