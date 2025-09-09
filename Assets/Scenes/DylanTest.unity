@@ -261,7 +261,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 2004701536}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532488033}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7515220b15c196548834286549b3872e, type: 3}
   m_Name: 
@@ -6283,11 +6283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45245cbfa4f4ef14eacbbf7a45ada129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 946749364}
-  painter: {fileID: 134221538}
-  assembler: {fileID: 1969423051}
-  brushSizeAddPercent: 0.8
-  paintCostMultiplier: 0.9
 --- !u!114 &946749367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7558,6 +7553,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 134221543}
     - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798058977526197516, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       propertyPath: nozzleTurnSpeed
       value: 60
       objectReference: {fileID: 0}
@@ -7630,6 +7629,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4964255680993957033, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2004701544}
+    - targetCorrespondingSourceObject: {fileID: 4964255680993957033, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2004701552}
     - targetCorrespondingSourceObject: {fileID: 8506765343372626509, guid: 5b4b1cf5f55fc0547b568c28b8631f8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2055614839}
@@ -7663,6 +7665,23 @@ MonoBehaviour:
   arc_Height: 2
   throwSpeed: 10
   cooldownTime: 1
+--- !u!114 &2004701552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532488033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477269e89fff2b10493a7771acd7c2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCam: {fileID: 1620507422}
+  targetRenderer: {fileID: 0}
+  brushTex: {fileID: 2800000, guid: bff6fffaea4428746b7fb0f6e4dd8035, type: 3}
+  brushColor: {r: 1, g: 0, b: 0, a: 1}
+  textureSize: 1024
 --- !u!1 &2046482873
 GameObject:
   m_ObjectHideFlags: 0
