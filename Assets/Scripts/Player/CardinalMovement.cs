@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class CardinalMovement : MonoBehaviour 
+public class CardinalMovement : MonoBehaviour
 {
     [Header("Move")]
     public float moveSpeed = 5f;
+    public float onBlueSpeed = 6f;
+    private float m_speed = 3f;
 
     [Header("Camera")]
     public Transform cameraTransform;
@@ -24,6 +26,7 @@ public class CardinalMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        CheckOnBlue();
         transform.LookAt(Camera.main.transform);
         // Input
         float h = Input.GetAxisRaw("Horizontal");
@@ -42,7 +45,7 @@ public class CardinalMovement : MonoBehaviour
         }
 
 
-        Vector3 desiredPlanarVel = (right * input.x + fwd * input.y) * moveSpeed;
+        Vector3 desiredPlanarVel = (right * input.x + fwd * input.y) * m_speed;
 
 
         Vector3 vel = rb.linearVelocity;
@@ -67,5 +70,53 @@ public class CardinalMovement : MonoBehaviour
         {
             spriteRenderer.flipX = true; // Facing Left
         }
+    }
+
+
+    public void CheckOnBlue()
+    {
+
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+        {
+            Renderer renderer = hit.collider.GetComponent<Renderer>();
+            Texture texture = renderer.material.GetTexture("_Mask_Texture");
+
+            if (texture is RenderTexture renderTexture)
+            {
+                RenderTexture.active = renderTexture;
+                Texture2D readableTexture = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
+                readableTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+                readableTexture.Apply();
+
+                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * readableTexture.width);
+                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * readableTexture.height);
+
+                Color color = readableTexture.GetPixel(pixelX, pixelY);
+                if (color.b > 0.8f)
+                {
+                    m_speed = onBlueSpeed;
+                }
+                else
+                {
+                    m_speed = moveSpeed;
+                }
+
+
+            }
+            else
+            {
+                m_speed = moveSpeed;
+             
+            }
+            
+
+        }
+        else
+        {
+            m_speed = moveSpeed;
+         
+        }
+       
     }
 }

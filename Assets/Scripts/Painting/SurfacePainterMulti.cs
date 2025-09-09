@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SurfacePainterMulti : MonoBehaviour
@@ -9,7 +10,8 @@ public class SurfacePainterMulti : MonoBehaviour
     public LayerMask paintMask = ~0;
 
     [Header("Brush (mask painting)")]
-    public Texture2D brushTexture;
+    public Texture2D currentBrushTexture;
+    public List<Texture2D> BrushTextures;
     [Range(0.05f, 20f)] public float brushSizePercent = 3.5f;
 
     [Tooltip("Scale brush by renderer size so huge meshes don’t get giant strokes.")]
@@ -56,6 +58,8 @@ public class SurfacePainterMulti : MonoBehaviour
             instance = this;
         else
             Destroy(this);
+
+        currentBrushTexture = BrushTextures[0];
 
         
     }
@@ -107,14 +111,27 @@ public class SurfacePainterMulti : MonoBehaviour
         {
             ActiveTarget(h);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            int currentIndex = BrushTextures.IndexOf(currentBrushTexture);
+            int nextIndex = (currentIndex + 1) % BrushTextures.Count;
+            currentBrushTexture = BrushTextures[nextIndex];
+            Debug.Log($"Switched to brush texture: {currentBrushTexture.name}");
+        }
+         if (Input.GetKeyDown(KeyCode.E))
+        {
+            int currentIndex = BrushTextures.IndexOf(currentBrushTexture);
+            int previousIndex = (currentIndex - 1 + BrushTextures.Count) % BrushTextures.Count;
+            currentBrushTexture = BrushTextures[previousIndex];
+            Debug.Log($"Switched to brush texture: {currentBrushTexture.name}");
+        }
     }
 
     void PaintAtUV(RenderTexture maskRT, Vector2 uv, Renderer rend)
     {
-        if (!brushTexture) return;
+        if (!currentBrushTexture) return;
         
-        // Debug UV coordinates and texture size
-        Debug.Log($"Painting on {rend.name} - UV: {uv}, Texture Size: {maskRT.width}x{maskRT.height}");
         
         RenderTexture prev = RenderTexture.active;
         RenderTexture.active = maskRT;
@@ -143,11 +160,9 @@ public class SurfacePainterMulti : MonoBehaviour
         float maxSize = maskRT.width * 0.2f;  // 20% of texture width
         brushPx = Mathf.Clamp(brushPx, minSize, maxSize);
     
-        // Debug final brush size
-        Debug.Log($"Brush size: {brushPx}px on texture {maskRT.width}px wide (Material scale: {texScale})");
     
         Rect rect = new Rect(px - brushPx * 0.5f, py - brushPx * 0.5f, brushPx, brushPx);
-        Graphics.DrawTexture(rect, brushTexture);
+        Graphics.DrawTexture(rect, currentBrushTexture);
         
         GL.PopMatrix();
         RenderTexture.active = prev;

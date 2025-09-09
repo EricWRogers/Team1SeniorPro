@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 6930636738789974020}
   - component: {fileID: 2411891912678115168}
   - component: {fileID: 7362521510472786024}
+  - component: {fileID: 2020237784115041759}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Cleanable
@@ -127,7 +128,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f692bc27a2512246ac51085f7ed9da5, type: 2}
+  - {fileID: 2100000, guid: dfbeeb25f49b127458a762087326c78f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,6 +172,29 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2020237784115041759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5552995230522871965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655a2e3a30790d141a48ae0790096cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paintableRenderers: []
+  autoCollectRenderers: 1
+  paintShader: {fileID: 4800000, guid: 976bd67ea3bd55848bf80628c365c59e, type: 3}
+  defaultOverlayTex: {fileID: 2800000, guid: 0c132ae9ac342be4c8ad3a4e696c5723, type: 3}
+  overlayColor: {r: 1, g: 1, b: 1, a: 1}
+  fallbackBaseTex: {fileID: 0}
+  solidColorTexSize: 4
+  maskResolution: 1024
+  initialMask: {fileID: 2800000, guid: 0c132ae9ac342be4c8ad3a4e696c5723, type: 3}
+  addMeshColliders: 1
+  collidersConvex: 0
 --- !u!1 &5928501343628925765
 GameObject:
   m_ObjectHideFlags: 0
