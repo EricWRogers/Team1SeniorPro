@@ -110,7 +110,7 @@ MonoBehaviour:
   speed: 40
   blueSpeedMult: 1.5
   damage: 4
-  health: 30
+  health: 20
   attackRange: 10
   detectionRange: 10
   Attack:
@@ -133,6 +133,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 256
+  colorStanding: {r: 0, g: 0, b: 0, a: 0}
+  colorCheckerRay: 1
   lootTable:
   - itemPrefab: {fileID: 2167828022742334288, guid: 840bbbf430c8ded4db7165856d2ed960, type: 3}
     dropChance: 100

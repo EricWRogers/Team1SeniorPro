@@ -4,6 +4,7 @@ public class SimpleBeacon : MonoBehaviour
 {
     bool _consumed;
     Collider _col;
+    public Transform spawnPoint;
 
     void Reset()
     {
@@ -31,6 +32,7 @@ public class SimpleBeacon : MonoBehaviour
 
         _consumed = true;
         if (_col) _col.enabled = false;   // prevent immediate re-trigger
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<Respawn>().RespawnPlayer();
         StartCoroutine(AdvanceAfterPhysics());
     }
 

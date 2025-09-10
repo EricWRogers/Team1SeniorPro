@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1843266408847379892}
   - component: {fileID: 5738778609908758863}
   - component: {fileID: 6339858538672968632}
+  - component: {fileID: 1557068459148944604}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -105,3 +106,16 @@ MonoBehaviour:
   increaseDmgTotal: 0
   increaseRadiusTotal: 0
   decreaseUsageTotal: 0
+--- !u!114 &1557068459148944604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6572310589110225400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b34a704dbfa5b542846b0c2931ca8be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 0}

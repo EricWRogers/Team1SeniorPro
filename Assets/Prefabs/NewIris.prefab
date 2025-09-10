@@ -9790,7 +9790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPaint: 100
-  currentPaint: 999999
+  currentPaint: 100
   loseScreen: {fileID: 0}
 --- !u!114 &7816764625791351553
 MonoBehaviour:
@@ -9873,12 +9873,12 @@ MonoBehaviour:
   maxSprayDistance: 15
   paintMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1019
   currentBrushTexture: {fileID: 0}
   BrushTextures:
   - {fileID: 2800000, guid: 45701903aacccc6ae9918e2323ab3994, type: 3}
   - {fileID: 2800000, guid: 815037b640e3c21fdbaf5f830eff6af2, type: 3}
-  brushSizePercent: 9.1
+  brushSizePercent: 4
   scaleBrushByRendererBounds: 0
   paint: {fileID: 6131217306032986920}
   paintCostPerSecond: 12

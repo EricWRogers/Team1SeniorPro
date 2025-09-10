@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
     private Texture2D readableTexture;
     RenderTexture activeMask;
     public Color colorStanding;
+    public float colorCheckerRay = 1f;
 
 
     [Header("Loot")]
@@ -201,7 +202,7 @@ public class Enemy : MonoBehaviour
     {
 
         Ray ray = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1f, ~layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, colorCheckerRay, ~layerMask))
         {
             //Debug.Log(hit.transform.gameObject);
             Renderer renderer = hit.collider.GetComponent<Renderer>();

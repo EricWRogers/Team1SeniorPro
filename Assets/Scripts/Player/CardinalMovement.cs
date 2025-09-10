@@ -15,6 +15,9 @@ public class CardinalMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private PaintResource paint;
     private bool checkOnPaint = true;
+    private Texture2D readableTexture;
+    RenderTexture activeMask;
+
 
 
     void Awake()
@@ -24,6 +27,7 @@ public class CardinalMovement : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.constraints = RigidbodyConstraints.FreezeRotation; // lock rotation
+        readableTexture = new Texture2D(1024, 1024, TextureFormat.ARGB32, false);
         
     }
     void Start()
@@ -94,18 +98,29 @@ public class CardinalMovement : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 1f))
         {
-            Renderer renderer = hit.collider.GetComponent<Renderer>();
+             Renderer renderer = hit.collider.GetComponent<Renderer>();
+
+            PaintableGroup temp = hit.transform.gameObject.GetComponent<PaintableGroup>();
+            if (temp == null) return;
+            activeMask = null;
+            
+            temp.TryGetMask(renderer, out activeMask);
+            
             Texture texture = renderer.material.GetTexture("_Mask_Texture");
+            //Debug.Log(hit.textureCoord);
 
-            if (texture is RenderTexture renderTexture)
+            if (activeMask)
             {
-                RenderTexture.active = renderTexture;
-                Texture2D readableTexture = new Texture2D(256, 256, TextureFormat.RGBAHalf, false);
-                readableTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
+                RenderTexture prev = RenderTexture.active;
+                RenderTexture.active = activeMask;
+                readableTexture.ReadPixels(new Rect(0, 0, activeMask.width, activeMask.height), 0, 0);
+        
                 readableTexture.Apply();
+                //Debug.Log($"Width {texture.width}, Height {texture.height}");
 
-                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * 256);
-                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * 256);
+                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * activeMask.width);
+                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * activeMask.height);
+
 
                 Color color = readableTexture.GetPixel(pixelX, pixelY);
                 Debug.Log($"the player color {color}");
@@ -121,7 +136,7 @@ public class CardinalMovement : MonoBehaviour
                 
                 if (color.r > 0.5f && color.b < .5)
                 {
-                   paint.Damage(1f * Time.fixedDeltaTime);
+                   //paint.Damage(1f * Time.fixedDeltaTime);
                 }
 
 
