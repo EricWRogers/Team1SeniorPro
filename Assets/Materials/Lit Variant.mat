@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Lit Variant
-  m_Shader: {fileID: 4800000, guid: a9bf44f38ac3d2052a6afa884cbdc54f, type: 3}
-  m_Parent: {fileID: 2100000, guid: 15b27a285a88bf02e9672fbe5b2d48b1, type: 2}
+  m_Shader: {fileID: 4800000, guid: 976bd67ea3bd55848bf80628c365c59e, type: 3}
+  m_Parent: {fileID: 2100000, guid: dfbeeb25f49b127458a762087326c78f, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
