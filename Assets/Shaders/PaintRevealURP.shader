@@ -57,12 +57,11 @@ Shader "URP/PaintReveal"
                 // If overlay texture is just white, tint by OverlayColor
                 half4 overlay = overT;// * _OverlayColor;
 
-                if(maskC.r > 0.9h && maskC.g > 0.9h && maskC.b > 0.9h) // if white, make monochrome
-                {
+                // If overlay texture is white, use monochrome version of base texture
                     half luminance = dot(baseC.rgb, half3(0.299h, 0.587h, 0.114h));
                     half3 monochrome = half3(luminance, luminance, luminance);
-                    half4 overlay = half4(monochrome, baseC.a);
-                }
+                    half4 basC = half4(monochrome, baseC.a);
+                
 
                 // mask.r = 1 -> show overlay (white); mask.r = 0 -> show base (color)
                 half t = 1.0h - maskC.r; // 0 = overlay, 1 = base

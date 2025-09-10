@@ -204,7 +204,7 @@ public class Enemy : MonoBehaviour
             if (texture is RenderTexture renderTexture)
             {
                 RenderTexture.active = renderTexture;
-                Texture2D readableTexture = new Texture2D(124, 124, TextureFormat.RGBAHalf, false);
+                Texture2D readableTexture = new Texture2D(256, 256, TextureFormat.RGBAHalf, false);
                 readableTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
                 readableTexture.Apply();
 
@@ -212,7 +212,7 @@ public class Enemy : MonoBehaviour
                 int pixelY = Mathf.FloorToInt(hit.textureCoord.y * readableTexture.height);
 
                 Color color = readableTexture.GetPixel(pixelX, pixelY);
-                if (color.b > 0.8f && color.r < 0.3f && color.g < 0.3f)
+                if (color.b > 0.8f )
                 {
                     m_speed = speed * blueSpeedMult;
                 }
@@ -221,7 +221,7 @@ public class Enemy : MonoBehaviour
                     m_speed = speed;
                 }
 
-                if (color.r > 0.8f && color.g < 0.3f && color.b < 0.2f)
+                if (color.r > 0.8f )
                 {
                     isOnRed = true;
                 }
