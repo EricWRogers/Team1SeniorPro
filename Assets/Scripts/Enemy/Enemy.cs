@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     public float nextWayPointDes;
     //public float flashTime;
     public List<Transform> wayPoints;
+    public LayerMask layerMask;
 
     private int m_curWayPoint = 0;
     private bool m_playerDetected = false;
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
     protected Health m_health;
     private SpriteRenderer spriteRenderer;
     private bool isOnRed;
+    private Texture2D readableTexture;
 
 
     [Header("Loot")]
@@ -46,6 +48,7 @@ public class Enemy : MonoBehaviour
         m_health = GetComponent<Health>();
         m_health.maxHealth = health;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        readableTexture = new Texture2D(1024, 1024, TextureFormat.RGBA32, false);
     }
 
     public void Start()
@@ -196,23 +199,25 @@ public class Enemy : MonoBehaviour
     {
 
         Ray ray = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f, ~layerMask))
         {
             Renderer renderer = hit.collider.GetComponent<Renderer>();
             Texture texture = renderer.material.GetTexture("_Mask_Texture");
+            //Debug.Log(hit.textureCoord);
 
             if (texture is RenderTexture renderTexture)
             {
                 RenderTexture.active = renderTexture;
-                Texture2D readableTexture = new Texture2D(256, 256, TextureFormat.RGBAHalf, false);
-                readableTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
+                readableTexture.ReadPixels(new Rect(0, 0, 1024, 1024), 0, 0);
                 readableTexture.Apply();
+                Debug.Log($"Width {texture.width}, Height {texture.height}");
 
-                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * readableTexture.width);
-                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * readableTexture.height);
+                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * 1024);
+                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * 1024);
 
                 Color color = readableTexture.GetPixel(pixelX, pixelY);
-                if (color.b > 0.8f )
+                Debug.Log($"the color {color}");
+                if (color.b > 0.8f)
                 {
                     m_speed = speed * blueSpeedMult;
                 }
@@ -221,7 +226,7 @@ public class Enemy : MonoBehaviour
                     m_speed = speed;
                 }
 
-                if (color.r > 0.8f )
+                if (color.r > 0.8f && color.b < .2f && color.g < .2f)
                 {
                     isOnRed = true;
                 }

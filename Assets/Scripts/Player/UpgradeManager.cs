@@ -37,11 +37,12 @@ public class UpgradeManager : MonoBehaviour
             return;
         }
 
-        m_player = GameObject.FindGameObjectWithTag("Player");
+        
         
     }
     void Update()
     {
+        m_player = GameObject.FindGameObjectWithTag("Player");
         PlayerCurrency = m_player.GetComponent<PlayerCurrency>().pigment;
     }
 

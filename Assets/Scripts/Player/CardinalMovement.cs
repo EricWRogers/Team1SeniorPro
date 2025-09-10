@@ -100,17 +100,18 @@ public class CardinalMovement : MonoBehaviour
             if (texture is RenderTexture renderTexture)
             {
                 RenderTexture.active = renderTexture;
-                Texture2D readableTexture = new Texture2D(124, 124, TextureFormat.RGBAHalf, false);
-                readableTexture.ReadPixels(new Rect(0, 0, 124, 124), 0, 0);
+                Texture2D readableTexture = new Texture2D(256, 256, TextureFormat.RGBAHalf, false);
+                readableTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
                 readableTexture.Apply();
 
-                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * 124);
-                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * 124);
+                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * 256);
+                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * 256);
 
                 Color color = readableTexture.GetPixel(pixelX, pixelY);
-                if (color.b > 0.8f )
+                Debug.Log($"the player color {color}");
+                if (color.b > 0.5f)
                 {
-                    
+
                     m_speed = onBlueSpeed;
                 }
                 else
@@ -118,7 +119,7 @@ public class CardinalMovement : MonoBehaviour
                     m_speed = moveSpeed;
                 }
                 
-                if (color.r > 0.8f && color.g < 0.4f && color.b < 0.4f)
+                if (color.r > 0.5f && color.b < .5)
                 {
                    paint.Damage(1f * Time.fixedDeltaTime);
                 }

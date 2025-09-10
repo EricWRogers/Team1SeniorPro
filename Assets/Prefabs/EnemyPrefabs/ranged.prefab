@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0, z: 0}
   speed: 40
+  blueSpeedMult: 1.5
   damage: 4
   health: 30
   attackRange: 10
@@ -129,6 +130,9 @@ MonoBehaviour:
         m_CallState: 2
   nextWayPointDes: 3
   wayPoints: []
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   lootTable:
   - itemPrefab: {fileID: 2167828022742334288, guid: 840bbbf430c8ded4db7165856d2ed960, type: 3}
     dropChance: 100
