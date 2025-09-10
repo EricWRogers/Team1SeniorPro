@@ -195,7 +195,7 @@ public class Enemy : MonoBehaviour
     public void CheckOnPaint()
     {
 
-        /*Ray ray = new Ray(transform.position, Vector3.down);
+        Ray ray = new Ray(transform.position, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 1f))
         {
             Renderer renderer = hit.collider.GetComponent<Renderer>();
@@ -204,7 +204,7 @@ public class Enemy : MonoBehaviour
             if (texture is RenderTexture renderTexture)
             {
                 RenderTexture.active = renderTexture;
-                Texture2D readableTexture = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
+                Texture2D readableTexture = new Texture2D(124, 124, TextureFormat.RGBAHalf, false);
                 readableTexture.ReadPixels(new Rect(0, 0, texture.width, texture.height), 0, 0);
                 readableTexture.Apply();
 
@@ -246,7 +246,7 @@ public class Enemy : MonoBehaviour
             m_speed = speed; 
             isOnRed = false;
          
-        }*/
+        }
        
     }
 }

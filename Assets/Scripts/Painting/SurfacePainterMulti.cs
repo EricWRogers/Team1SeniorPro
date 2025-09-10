@@ -148,14 +148,6 @@ public class SurfacePainterMulti : MonoBehaviour
         float baseSize = maskRT.width * (brushSizePercent / 100f);
         float brushPx = baseSize;
     
-        // Get material's main texture scale
-        Vector2 texScale = Vector2.one;
-        if (rend.material.mainTextureScale != Vector2.zero)
-        {
-            texScale = rend.material.mainTextureScale;
-            // Compensate for texture tiling
-            brushPx *= Mathf.Min(texScale.x, texScale.y);
-        }
     
         // Ensure minimum size regardless of UV density or texture scale
         float minSize = maskRT.width * 0.02f; // 2% of texture width

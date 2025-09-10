@@ -14,6 +14,7 @@ public class CardinalMovement : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
     private PaintResource paint;
+    private bool checkOnPaint = true;
 
 
     void Awake()
@@ -32,7 +33,15 @@ public class CardinalMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        CheckOnPaint();
+        if (checkOnPaint)
+        {
+            CheckOnPaint();
+            checkOnPaint = false;
+        }
+        else
+        {
+            checkOnPaint = true;
+        }
         transform.LookAt(Camera.main.transform);
         // Input
         float h = Input.GetAxisRaw("Horizontal");
@@ -91,16 +100,17 @@ public class CardinalMovement : MonoBehaviour
             if (texture is RenderTexture renderTexture)
             {
                 RenderTexture.active = renderTexture;
-                Texture2D readableTexture = new Texture2D(256, 256, TextureFormat.RGBAHalf, false);
-                readableTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
+                Texture2D readableTexture = new Texture2D(124, 124, TextureFormat.RGBAHalf, false);
+                readableTexture.ReadPixels(new Rect(0, 0, 124, 124), 0, 0);
                 readableTexture.Apply();
 
-                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * 256);
-                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * 256);
+                int pixelX = Mathf.FloorToInt(hit.textureCoord.x * 124);
+                int pixelY = Mathf.FloorToInt(hit.textureCoord.y * 124);
 
                 Color color = readableTexture.GetPixel(pixelX, pixelY);
-                if (color.b > 0.8f && color.r < 0.3f && color.g < 0.3f)
+                if (color.b > 0.8f )
                 {
+                    
                     m_speed = onBlueSpeed;
                 }
                 else
@@ -108,7 +118,7 @@ public class CardinalMovement : MonoBehaviour
                     m_speed = moveSpeed;
                 }
                 
-                if (color.r > 0.8f && color.g < 0.3f && color.b < 0.2f)
+                if (color.r > 0.8f && color.g < 0.4f && color.b < 0.4f)
                 {
                    paint.Damage(1f * Time.fixedDeltaTime);
                 }
