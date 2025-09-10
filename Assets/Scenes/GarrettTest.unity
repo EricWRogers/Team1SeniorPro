@@ -1972,6 +1972,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8922423852433061088, guid: c8a1528d65a97814da9c2274be8e863a, type: 3}
+      propertyPath: m_TagString
+      value: Cleanable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1985,6 +1989,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2020237784115041759, guid: f0f70db1a3887744a825893f4ba7f3b2, type: 3}
+      propertyPath: initialMask
+      value: 
+      objectReference: {fileID: 2800000, guid: d42c90302fc996d458910b135919f26c, type: 3}
     - target: {fileID: 7931275010411891091, guid: f0f70db1a3887744a825893f4ba7f3b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 109.8

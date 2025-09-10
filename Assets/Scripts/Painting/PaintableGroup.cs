@@ -81,9 +81,11 @@ public class PaintableGroup : MonoBehaviour
             if (initialMask) { w = initialMask.width; h = initialMask.height; }
             var rt = new RenderTexture(w, h, 0, RenderTextureFormat.ARGB32)
             {
+                
                 wrapMode = TextureWrapMode.Clamp,
                 filterMode = FilterMode.Bilinear
             };
+            //rt.isReadable
             var prev = RenderTexture.active;
             Graphics.Blit(initialMask ? initialMask : Texture2D.whiteTexture, rt);
             RenderTexture.active = prev;
